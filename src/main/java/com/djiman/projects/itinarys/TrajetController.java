@@ -1,14 +1,16 @@
 /**
  * 
  */
-package com.djiman.projects.itinarys.controllers;
+package com.djiman.projects.itinarys;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.djiman.projects.itinarys.beans.TrajetBean;
+import com.djiman.projects.itinarys.model.Trajet;
 
 /**
  * @author gorguindong
@@ -18,10 +20,13 @@ import com.djiman.projects.itinarys.beans.TrajetBean;
 
 @RestController
 public class TrajetController {
+
+	@Autowired
+	TrajetRepository trajetRepository;
 	
 	@RequestMapping("/trajet")
-    public TrajetBean getTrajet(@RequestParam(value="name", defaultValue="Rio") String name) {
-        return new TrajetBean("Rio","Dakar");
+    public Iterable<Trajet> getTrajet(@RequestParam(value="name", defaultValue="Rio") String name) {
+		return trajetRepository.findAll();
     }
 	
 }
