@@ -1,4 +1,4 @@
-package com.djiman.projects.itinarys;
+package com.djiman.projects.persistence;
 
 import org.springframework.data.repository.CrudRepository;
 
