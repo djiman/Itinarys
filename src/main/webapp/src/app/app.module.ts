@@ -1,27 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {MdCardModule} from '@angular2-material/card';
-import {MdButtonModule} from '@angular2-material/button';
-import {MdIconModule} from '@angular2-material/icon';
-import {MdIconRegistry} from '@angular2-material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { TrajetService } from './services/trajet.service';
+import { TrajettableComponent } from './components/trajettable/trajettable.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, TrajettableComponent
   ],
   imports: [
-    BrowserModule,
+  	BrowserModule,
     FormsModule,
     HttpModule,
-    MdCardModule, 
-    MdButtonModule, 
-    MdIconModule
+    HttpClientModule,
+    MatTableModule
   ],
-  providers: [MdIconRegistry],
-  bootstrap: [AppComponent]
+  providers: [TrajetService],
+  bootstrap: [AppComponent, TrajettableComponent]
 })
 export class AppModule { }
