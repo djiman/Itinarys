@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.djiman.projects.itinarys.beans.TrajetBean;
 import com.djiman.projects.itinarys.model.Trajet;
-import com.djiman.projects.persistence.TrajetRepository;
+import com.djiman.projects.itinarys.persistence.TrajetRepository;
 
 /**
  * @author gorguindong
