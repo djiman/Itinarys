@@ -54,7 +54,6 @@ public class GareBuilder {
 		Gare gare = new Gare();
 		gare.setGareId(this.gareId);
 		gare.setCommentaire(this.commentaire);
-		gare.setLigneId(this.ligneId);
 		gare.setOrdre(this.ordre);
 		gare.setNomGare(this.nomGare);
 		gare.setStatut(this.statut);
