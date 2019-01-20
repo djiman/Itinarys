@@ -1,9 +1,15 @@
 package com.djiman.projects.itinarys.model;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -12,7 +18,7 @@ import org.hibernate.annotations.Parameter;
 /**
  * @author gorguindong Initial version 1.0.0
  */
-@Entity
+@Entity(name = "Gare")
 @Table(name = "Gare")
 public class Gare {
 
@@ -24,23 +30,40 @@ public class Gare {
 			@Parameter(name = "initial_value", value = "1"), @Parameter(name = "increment_size", value = "1") })
 	private Long gareId;
 
-	@Column(name = "Ordre")
-	private Integer ordre;
+	@Column(name = "Nom", nullable = false)
+	private String nom;
 
-	@Column(name = "Nom")
-	private String nomGare;
+	@Column(name = "Statut", length = 1)
+	private Character statut;
 
-	@Column(name = "Statut")
-	private String statut;
-
-	@Column(name = "Ville")
+	@Column(name = "Ville", length = 100)
 	private String ville;
 
-	@Column(name = "Commentaire")
+	@Column(name = "commentaire", length = 4000)
 	private String commentaire;
 
+	@OneToMany(mappedBy = "gare", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GaresLigne> lignesGare = new HashSet<>();
+
+	public Gare() {
+	}
+
+	public Gare(Long gareId, String nom) {
+		this.gareId = gareId;
+		this.nom = nom;
+	}
+
+	public Gare(Long gareId, String nom, Character statut, String ville, String commentaire) {
+		this.gareId = gareId;
+		this.nom = nom;
+		this.statut = statut;
+		this.ville = ville;
+		this.commentaire = commentaire;
+	}
+
+
 	public Long getGareId() {
-		return gareId;
+		return this.gareId;
 	}
 
 	public void setGareId(Long gareId) {
@@ -48,32 +71,24 @@ public class Gare {
 	}
 
 
-	public Integer getOrdre() {
-		return ordre;
+	public String getNom() {
+		return this.nom;
 	}
 
-	public void setOrdre(Integer ordre) {
-		this.ordre = ordre;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public String getNomGare() {
-		return nomGare;
+	public Character getStatut() {
+		return this.statut;
 	}
 
-	public void setNomGare(String nomGare) {
-		this.nomGare = nomGare;
-	}
-
-	public String getStatut() {
-		return statut;
-	}
-
-	public void setStatut(String statut) {
+	public void setStatut(Character statut) {
 		this.statut = statut;
 	}
 
 	public String getVille() {
-		return ville;
+		return this.ville;
 	}
 
 	public void setVille(String ville) {
@@ -81,65 +96,19 @@ public class Gare {
 	}
 
 	public String getCommentaire() {
-		return commentaire;
+		return this.commentaire;
 	}
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
-	}	
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((commentaire == null) ? 0 : commentaire.hashCode());
-		result = prime * result + ((gareId == null) ? 0 : gareId.hashCode());
-		result = prime * result + ((nomGare == null) ? 0 : nomGare.hashCode());
-		result = prime * result + ((ordre == null) ? 0 : ordre.hashCode());
-		result = prime * result + ((statut == null) ? 0 : statut.hashCode());
-		result = prime * result + ((ville == null) ? 0 : ville.hashCode());
-		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Gare other = (Gare) obj;
-		if (commentaire == null) {
-			if (other.commentaire != null)
-				return false;
-		} else if (!commentaire.equals(other.commentaire))
-			return false;
-		if (gareId == null) {
-			if (other.gareId != null)
-				return false;
-		} else if (!gareId.equals(other.gareId))
-			return false;
-		if (nomGare == null) {
-			if (other.nomGare != null)
-				return false;
-		} else if (!nomGare.equals(other.nomGare))
-			return false;
-		if (ordre == null) {
-			if (other.ordre != null)
-				return false;
-		} else if (!ordre.equals(other.ordre))
-			return false;
-		if (statut == null) {
-			if (other.statut != null)
-				return false;
-		} else if (!statut.equals(other.statut))
-			return false;
-		if (ville == null) {
-			if (other.ville != null)
-				return false;
-		} else if (!ville.equals(other.ville))
-			return false;
-		return true;
+	public Set<GaresLigne> getLignesGare() {
+		return lignesGare;
 	}
+
+	public void setLignesGare(Set<GaresLigne> lignesGare) {
+		this.lignesGare = lignesGare;
+	}
+
 }

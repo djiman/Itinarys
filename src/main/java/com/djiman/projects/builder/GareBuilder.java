@@ -8,10 +8,8 @@ import com.djiman.projects.itinarys.model.Gare;
 public class GareBuilder {
 
 	private Long gareId;
-	private Long ligneId;
-	private Integer ordre;
 	private String nomGare;
-	private String statut;
+	private Character statut;
 	private String ville;
 	private String commentaire;
 
@@ -20,22 +18,12 @@ public class GareBuilder {
 		return this;
 	}
 
-	public GareBuilder ligneId(Long ligneId) {
-		this.ligneId = ligneId;
-		return this;
-	}
-
-	public GareBuilder ordre(Integer ordre) {
-		this.ordre = ordre;
-		return this;
-	}
-
 	public GareBuilder nomGare(String nomGare) {
 		this.nomGare = nomGare;
 		return this;
 	}
 
-	public GareBuilder statut(String statut) {
+	public GareBuilder statut(Character statut) {
 		this.statut = statut;
 		return this;
 	}
@@ -54,8 +42,7 @@ public class GareBuilder {
 		Gare gare = new Gare();
 		gare.setGareId(this.gareId);
 		gare.setCommentaire(this.commentaire);
-		gare.setOrdre(this.ordre);
-		gare.setNomGare(this.nomGare);
+		gare.setNom(this.nomGare);
 		gare.setStatut(this.statut);
 		gare.setVille(this.ville);
 		return gare;

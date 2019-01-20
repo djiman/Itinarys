@@ -2,7 +2,7 @@ package com.djiman.projects.builder;
 
 import java.util.Set;
 
-import com.djiman.projects.itinarys.model.Gare;
+import com.djiman.projects.itinarys.model.GaresLigne;
 import com.djiman.projects.itinarys.model.Ligne;
 
 /**
@@ -10,24 +10,18 @@ import com.djiman.projects.itinarys.model.Ligne;
  */
 public class LigneBuilder {
 
-	private Integer ligneId;
 	private String nomLigne;
-	private String statut;
+	private Character statut;
 	private String typeTransport;
 	private String commentaire;
-	private Set<Gare> garesligne;
-
-	public LigneBuilder ligneId(Integer ligneId) {
-		this.ligneId = ligneId;
-		return this;
-	}
+	private Set<GaresLigne> garesligne;
 
 	public LigneBuilder nomLigne(String nomLigne) {
 		this.nomLigne = nomLigne;
 		return this;
 	}
 
-	public LigneBuilder statut(String statut) {
+	public LigneBuilder statut(Character statut) {
 		this.statut = statut;
 		return this;
 	}
@@ -42,19 +36,18 @@ public class LigneBuilder {
 		return this;
 	}
 	
-	public LigneBuilder garesLigne(Set<Gare> garesLigne) {
+	public LigneBuilder garesLigne(Set<GaresLigne> garesLigne) {
 		this.garesligne = garesLigne;
 		return this;
 	}
 
 	public Ligne build() {
 		Ligne ligne = new Ligne();
-		ligne.setLigneId(this.ligneId);
-		ligne.setNomLigne(this.nomLigne);
+		ligne.setNom(this.nomLigne);
 		ligne.setStatut(this.statut);
-		ligne.setTypeTransport(this.typeTransport);
+		ligne.setType(this.typeTransport);
 		ligne.setCommentaire(this.commentaire);
-		ligne.setGaresDesservies(this.garesligne);
+		// ligne.setGaresLignes(this.garesligne);
 		return ligne;
 	}
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.djiman.projects.itinarys.model.Ligne;
 
 @Repository
-public interface LigneRepository extends CrudRepository<Ligne, Integer> {
+public interface LigneRepository extends CrudRepository<Ligne, Long> {
 }

@@ -1,18 +1,27 @@
-<div>
-  <mat-table [dataSource]="dataSource">
+<div class="example-container mat-elevation-z8">
+
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Position Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
       <mat-cell *matCellDef="let trajet"> {{trajet.id}} </mat-cell>
     </ng-container>
+
+    <!-- Name Column -->
     <ng-container matColumnDef="arret">
       <mat-header-cell *matHeaderCellDef> Arret </mat-header-cell>
       <mat-cell *matCellDef="let trajet"> {{trajet.arret}} </mat-cell>
     </ng-container>
+
+    <!-- Weight Column -->
     <ng-container matColumnDef="prochainArret">
-      <mat-header-cell *matHeaderCellDef> ProchainArret </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Prochain Arret </mat-header-cell>
       <mat-cell *matCellDef="let trajet"> {{trajet.prochainArret}} </mat-cell>
     </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+

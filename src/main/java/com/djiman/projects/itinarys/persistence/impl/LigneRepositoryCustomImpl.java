@@ -17,7 +17,8 @@ public class LigneRepositoryCustomImpl implements LigneRepositoryCustom {
 	
 	@Override
 	public Ligne getLigneByName(String pNomLigne) {
-		TypedQuery<Ligne> query = (TypedQuery<Ligne>) em.createQuery("from Ligne l where l.nomLigne =:nomLigne", Ligne.class);
+		TypedQuery<Ligne> query = (TypedQuery<Ligne>) em.createQuery("from Ligne l where l.nom =:nomLigne",
+				Ligne.class);
 		query.setParameter("nomLigne", pNomLigne);
 		return query.getSingleResult();
 	}
