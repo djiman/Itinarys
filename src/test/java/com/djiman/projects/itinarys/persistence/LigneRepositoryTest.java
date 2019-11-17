@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,16 +53,22 @@ public class LigneRepositoryTest {
 		// Ligne
 		ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
 		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 2);
-		ligne.addGareLigne(garesLigne1);
+
 		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 3);
-		ligne.addGareLigne(garesLigne2);
+
 		GaresLigne garesLigne3 = new GaresLigne(ligne, gare3, 1);
-		ligne.addGareLigne(garesLigne3);
+		Set<GaresLigne> gareLigne1 = new HashSet<>();
+		gareLigne1.add(garesLigne1);
+		gareLigne1.add(garesLigne2);
+		gareLigne1.add(garesLigne3);
+		ligne.getGaresLignes().addAll(gareLigne1);
 
 		// Ligne1
 		ligne1 = ModelHelper.ligneBuilder("PremiereLigne", "Test ligne", '0', "Train");
-		ligne1.addGareLigne(new GaresLigne(ligne1, gare, 1));
-		ligne1.addGareLigne(new GaresLigne(ligne1, gare2, 2));
+		Set<GaresLigne> gareLigne2 = new HashSet<>();
+		gareLigne2.add(new GaresLigne(ligne1, gare, 1));
+		gareLigne2.add(new GaresLigne(ligne1, gare2, 2));
+		ligne1.getGaresLignes().addAll(gareLigne2);
 
 		// Ligne2
 		ligne2 = ModelHelper.ligneBuilder("DeuxiemeLigne", "Test ligne2", '0', "Bus");
@@ -135,8 +142,8 @@ public class LigneRepositoryTest {
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 3);
 
-		assertEquals("PremiereGare", garesLigneFromBdd.get(1).getGare().getNom());
-		assertEquals("TroisiemeGare", garesLigneFromBdd.get(0).getGare().getNom());
-		assertEquals("DeuxiemeGare", garesLigneFromBdd.get(2).getGare().getNom());
+		assertEquals(1, garesLigneFromBdd.get(0).getOrdre().intValue());
+		assertEquals(2, garesLigneFromBdd.get(1).getOrdre().intValue());
+		assertEquals(3, garesLigneFromBdd.get(2).getOrdre().intValue());
 	}
 }

@@ -15,6 +15,7 @@ import com.djiman.projects.itinarys.persistence.GareRepositoryCustom;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import com.djiman.projects.itinarys.util.ConstantesMessages;
+import com.djiman.projects.itinarys.util.GareDtoComparator;
 
 @Service
 public class LigneManager {
@@ -89,6 +90,7 @@ public class LigneManager {
 			GareDTO gareDto = new GareDTO(gareLigne.getGare().getNom(), gareLigne.getOrdre());
 			garesDto.add(gareDto);
 		}
+		garesDto.sort(new GareDtoComparator());
 		result.setGaresDto(garesDto);
 		return result;
 	}

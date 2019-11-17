@@ -62,7 +62,6 @@ public class Ligne {
 		this.commentaire = commentaire;
 	}
 
-
 	public Long getLigneId() {
 		return this.ligneId;
 	}
@@ -70,7 +69,6 @@ public class Ligne {
 	public void setLigneId(Long ligneId) {
 		this.ligneId = ligneId;
 	}
-
 
 	public String getNom() {
 		return this.nom;
@@ -80,7 +78,6 @@ public class Ligne {
 		this.nom = nom;
 	}
 
-
 	public Character getStatut() {
 		return this.statut;
 	}
@@ -88,7 +85,6 @@ public class Ligne {
 	public void setStatut(Character statut) {
 		this.statut = statut;
 	}
-
 
 	public String getType() {
 		return this.type;
@@ -105,7 +101,6 @@ public class Ligne {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-
 
 	public Set<GaresLigne> getGaresLignes() {
 		return garesLignes;

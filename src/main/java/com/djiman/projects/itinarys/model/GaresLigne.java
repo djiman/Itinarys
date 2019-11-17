@@ -89,8 +89,6 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 	@Override
 	public int compareTo(GaresLigne gareLigne) {
 
-		if (this.getOrdre() == null)
-			return 0;
 		if (gareLigne.getOrdre() == null)
 			return 0;
 		if (this.getOrdre() > gareLigne.getOrdre()) {
