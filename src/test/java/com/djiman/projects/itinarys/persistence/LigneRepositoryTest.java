@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.djiman.projects.builder.GareBuilder;
 import com.djiman.projects.builder.LigneBuilder;
-import com.djiman.projects.itinarys.dto.GareDTO;
+import com.djiman.projects.itinarys.helper.ModelHelper;
 import com.djiman.projects.itinarys.model.Gare;
 import com.djiman.projects.itinarys.model.GaresLigne;
 import com.djiman.projects.itinarys.model.Ligne;
@@ -40,45 +41,37 @@ public class LigneRepositoryTest {
 	@Before
 	public void setUp() {
 
-		Gare gare = new GareBuilder().commentaire("Test gare").nomGare("PremiereGare").statut('0').ville("Gare1")
-				.build();
-		Gare gare2 = new GareBuilder().commentaire("Test gare 2").nomGare("DeuxiemeGare").statut('0').ville("Gare2")
-				.build();
-		Gare gare3 = new GareBuilder().commentaire("Test gare 3").nomGare("TroisiemeGare").statut('0').ville("Gare3")
-				.build();
+		Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
+		Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
+		Gare gare3 = ModelHelper.gareBuilder("TroisiemeGare", "Test gare 3", '0', "Ville3");
 
 		gareRepository.save(gare);
 		gareRepository.save(gare2);
 		gareRepository.save(gare3);
 
-		ligne = new LigneBuilder().commentaire("Test ligne").nomLigne("Ligne").statut('0').typeTransport("Train")
-				.build();
-		GareDTO gareDTO3 = new GareDTO(gare3, new Integer(2));
-		ligne.addGare(gareDTO3);
-		GareDTO gareDTO2 = new GareDTO(gare2, new Integer(3));
-		ligne.addGare(gareDTO2);
-		GareDTO gareDTO = new GareDTO(gare, new Integer(1));
-		ligne.addGare(gareDTO);
+		// Ligne
+		ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
+		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 2);
+		ligne.addGareLigne(garesLigne1);
+		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 3);
+		ligne.addGareLigne(garesLigne2);
+		GaresLigne garesLigne3 = new GaresLigne(ligne, gare3, 1);
+		ligne.addGareLigne(garesLigne3);
 
-		ligne1 = new LigneBuilder().commentaire("Test ligne").nomLigne("PremiereLigne").statut('0')
-				.typeTransport("Train").build();
-		ligne1.addGare(gareDTO);
-		ligne1.addGare(gareDTO3);
+		// Ligne1
+		ligne1 = ModelHelper.ligneBuilder("PremiereLigne", "Test ligne", '0', "Train");
+		ligne1.addGareLigne(new GaresLigne(ligne1, gare, 1));
+		ligne1.addGareLigne(new GaresLigne(ligne1, gare2, 2));
 
-		ligne2 = new LigneBuilder().commentaire("Test ligne2").nomLigne("DeuxiemeLigne").statut('0')
-				.typeTransport("Bus").build();
-		ligne2.addGare(gareDTO2);
-		ligne2.addGare(gareDTO);
+		// Ligne2
+		ligne2 = ModelHelper.ligneBuilder("DeuxiemeLigne", "Test ligne2", '0', "Bus");
 
-		ligne3 = new LigneBuilder().commentaire("Test ligne3").nomLigne("TroisiemeLigne").statut('1')
-				.typeTransport("Bus").build();
-		ligne3.addGare(gareDTO);
-		ligne3.addGare(gareDTO3);
+		// Ligne3
+		ligne3 = ModelHelper.ligneBuilder("TroisiemeLigne", "Test ligne3", '1', "Bus");
 
-		ligne4 = new LigneBuilder().commentaire("Test ligne4").nomLigne("QuatriemeLigne").statut('0')
-				.typeTransport("Metro").build();
-		ligne4.addGare(gareDTO2);
-		ligne4.addGare(gareDTO);
+		// Ligne4
+		ligne4 = ModelHelper.ligneBuilder("QuatriemeLigne", "Test ligne4", '0', "Metro");
+
 		ligneRepository.save(ligne);
 		ligneRepository.save(ligne1);
 		ligneRepository.save(ligne2);
@@ -88,7 +81,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testSaveUneLigne() {
-		List<Ligne> lignesFromBDD = (List<Ligne>) ligneRepository.findAll();
+		List<Ligne> lignesFromBDD = ligneRepository.findAll();
 		assertFalse(lignesFromBDD.isEmpty());
 		assertEquals("Ligne", lignesFromBDD.get(0).getNom());
 		assertFalse(lignesFromBDD.get(0).getGaresLignes().isEmpty());
@@ -96,7 +89,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testSavePlusieursLignes() {
-		List<Ligne> lignesFromBDD = (List<Ligne>) ligneRepository.findAll();
+		List<Ligne> lignesFromBDD = ligneRepository.findAll();
 		assertFalse(lignesFromBDD.isEmpty());
 		assertEquals(5, lignesFromBDD.size());
 	}
@@ -114,14 +107,14 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesLignes() {
-		List<Ligne> lignesBdd = (List<Ligne>) ligneRepository.findAll();
+		List<Ligne> lignesBdd = ligneRepository.findAll();
 		assertTrue(lignesBdd.size() == 5);
 	}
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigne() {
 		Ligne ligneFromBdd = ligneRepository.findOne(ligne.getLigneId());
-		List<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
+		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 3);
 	}
@@ -129,7 +122,7 @@ public class LigneRepositoryTest {
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneByNomLigne() {
 		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("PremiereLigne");
-		List<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
+		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 2);
 	}
@@ -137,12 +130,13 @@ public class LigneRepositoryTest {
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneAvecOrdre() {
 		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("Ligne");
-		List<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
+		List<GaresLigne> garesLigneFromBdd = new ArrayList<GaresLigne>(ligneFromBdd.getGaresLignes());
+
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 3);
 
-		assertEquals("PremiereGare", garesLigneFromBdd.get(0).getGare().getNom());
-		assertEquals("TroisiemeGare", garesLigneFromBdd.get(1).getGare().getNom());
+		assertEquals("PremiereGare", garesLigneFromBdd.get(1).getGare().getNom());
+		assertEquals("TroisiemeGare", garesLigneFromBdd.get(0).getGare().getNom());
 		assertEquals("DeuxiemeGare", garesLigneFromBdd.get(2).getGare().getNom());
 	}
 }

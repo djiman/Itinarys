@@ -1,8 +1,5 @@
 package com.djiman.projects.builder;
 
-import java.util.Set;
-
-import com.djiman.projects.itinarys.model.GaresLigne;
 import com.djiman.projects.itinarys.model.Ligne;
 
 /**
@@ -14,7 +11,6 @@ public class LigneBuilder {
 	private Character statut;
 	private String typeTransport;
 	private String commentaire;
-	private Set<GaresLigne> garesligne;
 
 	public LigneBuilder nomLigne(String nomLigne) {
 		this.nomLigne = nomLigne;
@@ -36,10 +32,6 @@ public class LigneBuilder {
 		return this;
 	}
 	
-	public LigneBuilder garesLigne(Set<GaresLigne> garesLigne) {
-		this.garesligne = garesLigne;
-		return this;
-	}
 
 	public Ligne build() {
 		Ligne ligne = new Ligne();
@@ -47,7 +39,6 @@ public class LigneBuilder {
 		ligne.setStatut(this.statut);
 		ligne.setType(this.typeTransport);
 		ligne.setCommentaire(this.commentaire);
-		// ligne.setGaresLignes(this.garesligne);
 		return ligne;
 	}
 }

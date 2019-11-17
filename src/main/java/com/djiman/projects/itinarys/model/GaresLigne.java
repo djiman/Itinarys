@@ -3,18 +3,21 @@ package com.djiman.projects.itinarys.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * @author gorguindong Initial version 1.0.0
  */
-@Entity(name = "GaresLigne")
-@Table(name = "garesLigne")
+@Entity
+@Table(name = "gares_ligne")
 public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 
 	/**
@@ -22,15 +25,21 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 	 */
 	private static final long serialVersionUID = 3264880269413940662L;
 
-	@EmbeddedId
-	private GaresLigneId id;
+	@Id
+	@Column(name = "gare_ligneid")
+	@GeneratedValue(generator = "SEQ_GARELIGNE")
+	@GenericGenerator(name = "SEQ_GARELIGNE", strategy = "increment", parameters = {
+			@Parameter(name = "sequence_name", value = "ITINARYS_GARE_LIGNE"),
+			@Parameter(name = "optimizer", value = "none"), @Parameter(name = "initial_value", value = "1"),
+			@Parameter(name = "increment_size", value = "1") })
+	private long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("ligneId")
+	@ManyToOne
+	@JoinColumn(name = "LigneID")
 	private Ligne ligne;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("gareId")
+	@ManyToOne
+	@JoinColumn(name = "GareID")
 	private Gare gare;
 
 	@Column(name = "ORDRE", nullable = false)
@@ -43,19 +52,13 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 		this.ligne = ligne;
 		this.gare = gare;
 		this.ordre = ordre;
-		this.id = new GaresLigneId(ligne.getLigneId(), gare.getGareId());
 	}
 
-	public GaresLigne(GaresLigneId id, Integer ordre) {
-		this.id = id;
-		this.ordre = ordre;
+	public long getId() {
+		return id;
 	}
 
-	public GaresLigneId getId() {
-		return this.id;
-	}
-
-	public void setId(GaresLigneId id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -85,6 +88,11 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 
 	@Override
 	public int compareTo(GaresLigne gareLigne) {
+
+		if (this.getOrdre() == null)
+			return 0;
+		if (gareLigne.getOrdre() == null)
+			return 0;
 		if (this.getOrdre() > gareLigne.getOrdre()) {
 			return 1;
 		}

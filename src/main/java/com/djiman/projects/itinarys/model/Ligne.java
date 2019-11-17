@@ -1,27 +1,25 @@
 package com.djiman.projects.itinarys.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.djiman.projects.itinarys.dto.GareDTO;
-
 /**
  * @author gorguindong Initial version 1.0.0
  */
-@Entity(name = "Ligne")
+@Entity
 @Table(name = "Ligne")
 public class Ligne {
 
@@ -45,9 +43,8 @@ public class Ligne {
 	@Column(name = "commentaire", length = 4000)
 	private String commentaire;
 
-	@OneToMany(mappedBy = "ligne", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy("ordre")
-	private List<GaresLigne> garesLignes = new ArrayList<>();
+	@OneToMany(mappedBy = "ligne", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<GaresLigne> garesLignes = new TreeSet<GaresLigne>();
 
 	public Ligne() {
 	}
@@ -65,6 +62,7 @@ public class Ligne {
 		this.commentaire = commentaire;
 	}
 
+
 	public Long getLigneId() {
 		return this.ligneId;
 	}
@@ -72,6 +70,7 @@ public class Ligne {
 	public void setLigneId(Long ligneId) {
 		this.ligneId = ligneId;
 	}
+
 
 	public String getNom() {
 		return this.nom;
@@ -81,6 +80,7 @@ public class Ligne {
 		this.nom = nom;
 	}
 
+
 	public Character getStatut() {
 		return this.statut;
 	}
@@ -88,6 +88,7 @@ public class Ligne {
 	public void setStatut(Character statut) {
 		this.statut = statut;
 	}
+
 
 	public String getType() {
 		return this.type;
@@ -105,18 +106,23 @@ public class Ligne {
 		this.commentaire = commentaire;
 	}
 
-	public List<GaresLigne> getGaresLignes() {
-		Collections.sort(garesLignes);
+
+	public Set<GaresLigne> getGaresLignes() {
 		return garesLignes;
 	}
 
-	public void setGaresLignes(List<GaresLigne> garesDesservies) {
-		this.garesLignes = garesDesservies;
+	public void setGaresLignes(SortedSet<GaresLigne> garesLignes) {
+		this.garesLignes = garesLignes;
 	}
 
-	public void addGare(GareDTO gareDto) {
-		GaresLigne gareLigne = new GaresLigne(this, gareDto.getGare(), gareDto.getOrdre());
-		this.getGaresLignes().add(gareLigne);
+	public void addGareLigne(GaresLigne gareLigne) {
+		this.garesLignes.add(gareLigne);
+	}
+
+	@Override
+	public String toString() {
+		return "Ligne [ligneId=" + ligneId + ", nom=" + nom + ", statut=" + statut + ", type=" + type + ", commentaire="
+				+ commentaire + ", garesLignes=" + garesLignes + "]";
 	}
 
 	// TODO removeGare

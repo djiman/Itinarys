@@ -1,10 +1,8 @@
 package com.djiman.projects.itinarys.persistence;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.djiman.projects.itinarys.model.Ligne;
 
-@Repository
-public interface LigneRepository extends CrudRepository<Ligne, Long> {
+public interface LigneRepository extends JpaRepository<Ligne, Long> {
 }

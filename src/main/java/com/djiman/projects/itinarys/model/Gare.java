@@ -1,15 +1,9 @@
 package com.djiman.projects.itinarys.model;
 
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -18,7 +12,7 @@ import org.hibernate.annotations.Parameter;
 /**
  * @author gorguindong Initial version 1.0.0
  */
-@Entity(name = "Gare")
+@Entity
 @Table(name = "Gare")
 public class Gare {
 
@@ -42,9 +36,6 @@ public class Gare {
 	@Column(name = "commentaire", length = 4000)
 	private String commentaire;
 
-	@OneToMany(mappedBy = "gare", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<GaresLigne> lignesGare = new HashSet<>();
-
 	public Gare() {
 	}
 
@@ -61,7 +52,6 @@ public class Gare {
 		this.commentaire = commentaire;
 	}
 
-
 	public Long getGareId() {
 		return this.gareId;
 	}
@@ -69,7 +59,6 @@ public class Gare {
 	public void setGareId(Long gareId) {
 		this.gareId = gareId;
 	}
-
 
 	public String getNom() {
 		return this.nom;
@@ -101,14 +90,6 @@ public class Gare {
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
-	}
-
-	public Set<GaresLigne> getLignesGare() {
-		return lignesGare;
-	}
-
-	public void setLignesGare(Set<GaresLigne> lignesGare) {
-		this.lignesGare = lignesGare;
 	}
 
 }

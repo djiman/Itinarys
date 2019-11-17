@@ -1,25 +1,22 @@
 package com.djiman.projects.itinarys.dto;
 
-import com.djiman.projects.itinarys.model.Gare;
-
 public class GareDTO {
 
-	private Gare gare;
+	private String nomGare;
 
 	private int ordre;
 
-	public GareDTO(Gare gare, int ordre) {
-		super();
-		this.gare = gare;
+	public GareDTO(String gare, int ordre) {
+		this.nomGare = gare;
 		this.ordre = ordre;
 	}
 
-	public Gare getGare() {
-		return gare;
+	public String getGare() {
+		return nomGare;
 	}
 
-	public void setGare(Gare gare) {
-		this.gare = gare;
+	public void setGare(String gare) {
+		this.nomGare = gare;
 	}
 
 	public int getOrdre() {
