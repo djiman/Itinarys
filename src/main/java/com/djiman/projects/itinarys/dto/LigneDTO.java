@@ -1,9 +1,14 @@
 package com.djiman.projects.itinarys.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LigneDTO {
+public class LigneDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6296302827665865447L;
 	private String nomLigne;
 	private String commentaire;
 	private Character statut;

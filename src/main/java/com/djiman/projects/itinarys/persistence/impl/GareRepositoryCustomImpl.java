@@ -1,8 +1,9 @@
 package com.djiman.projects.itinarys.persistence.impl;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +17,8 @@ public class GareRepositoryCustomImpl implements GareRepositoryCustom {
 	EntityManager em;
 
 	@Override
-	public Gare getGareByName(String pNomGare) {
-		TypedQuery<Gare> query = (TypedQuery<Gare>) em.createQuery("from Gare g where g.nom =:nomGare", Gare.class);
-		query.setParameter("nomGare", pNomGare);
-		return query.getSingleResult();
+	public Optional<Gare> getGareByName(String pNomGare) {
+		return em.createQuery("from Gare g where g.nom =:nomGare", Gare.class).setParameter("nomGare", pNomGare)
+				.setMaxResults(1).getResultList().stream().findFirst();
 	}
 }

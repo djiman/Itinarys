@@ -1,8 +1,10 @@
 package com.djiman.projects.itinarys.persistence.impl;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +18,18 @@ public class LigneRepositoryCustomImpl implements LigneRepositoryCustom {
 	EntityManager em;
 	
 	@Override
-	public Ligne getLigneByName(String pNomLigne) {
-		TypedQuery<Ligne> query = (TypedQuery<Ligne>) em.createQuery("from Ligne l where l.nom =:nomLigne",
-				Ligne.class);
-		query.setParameter("nomLigne", pNomLigne);
-		return query.getSingleResult();
+	public Optional<Ligne> getLigneByName(String pNomLigne) {
+
+		return em.createQuery("from Ligne l where l.nom =:nomLigne", Ligne.class).setParameter("nomLigne", pNomLigne)
+				.setMaxResults(1).getResultList().stream().findFirst();
 	}
+
+	@Override
+	@Transactional
+	public void deleteAllGaresOfLine(Long pLigneId) {
+		em.createQuery("delete from GaresLigne garesLigne where garesLigne.ligne.ligneId=:pLigneId")
+				.setParameter("pLigneId", pLigneId)
+				.executeUpdate();
+	}
+
 }

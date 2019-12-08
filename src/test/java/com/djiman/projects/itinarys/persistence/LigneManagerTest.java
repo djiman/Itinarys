@@ -5,11 +5,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,10 +37,19 @@ public class LigneManagerTest {
 	@Mock
 	private GareRepositoryCustom gareRepositoryCustom;
 
+	@Mock
+	private LigneRepositoryCustom ligneRepositoryCustom;
+
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+		ligneManager = new LigneManager();
+		ligneManager.setLigneRepositoryCustom(ligneRepositoryCustom);
+		ligneManager.setGareRepositoryCustom(gareRepositoryCustom);
+	}
+
 	@Test
 	public void testConvertLigneDtoToLigne() {
-		ligneManager = new LigneManager();
-		ligneManager.setGareRepositoryCustom(gareRepositoryCustom);
 		LigneDTO ligneDto = new LigneDTO();
 		ligneDto.setCommentaire("Test Ligne Dto");
 		ligneDto.setNomLigne("Test Nom Ligne");
@@ -47,9 +59,10 @@ public class LigneManagerTest {
 		GareDTO gareDto = new GareDTO("nom gare", 1);
 		garesDto.add(gareDto);
 		ligneDto.setGaresDto(garesDto);
-
-		Mockito.when(gareRepositoryCustom.getGareByName("nom gare"))
-				.thenReturn(ModelHelper.gareBuilder("nom gare", "Test gare", '0', "Ville1"));
+		Gare gareExpected = new Gare();
+		gareExpected.setNom("nom gare");
+		Optional<Gare> opt = Optional.of(gareExpected);
+		Mockito.when(gareRepositoryCustom.getGareByName("nom gare")).thenReturn(opt);
 
 		Ligne ligne = ligneManager.convertLigneDtoToLigne(ligneDto);
 		assertEquals("Test Nom Ligne", ligne.getNom());
@@ -61,10 +74,7 @@ public class LigneManagerTest {
 
 	@Test
 	public void testConvertLigneToLigneDto() {
-
-		ligneManager = new LigneManager();
 		Ligne ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
-		
 		Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
 		Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
 

@@ -2,19 +2,22 @@ package com.djiman.projects.itinarys.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.djiman.projects.itinarys.dto.GareDTO;
 import com.djiman.projects.itinarys.dto.LigneDTO;
+import com.djiman.projects.itinarys.model.Gare;
 import com.djiman.projects.itinarys.model.GaresLigne;
 import com.djiman.projects.itinarys.model.Ligne;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.GareRepositoryCustom;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
-import com.djiman.projects.itinarys.util.ConstantesMessages;
 import com.djiman.projects.itinarys.util.GareDtoComparator;
 
 @Service
@@ -41,42 +44,46 @@ public class LigneManager {
 		return resultDTO;
 	}
 
-	public Object getLigneByName(String pNomLigne) {
-		Object result = null;
-		try {
-			result = convertLigneToLigneDto(ligneRepositoryCustom.getLigneByName(pNomLigne));
-		} catch (Exception e) {
-			result = ConstantesMessages.AUCUNE_LIGNE_TROUVEE;
-		}
+	public LigneDTO getLigneByName(String pNomLigne) {
+		LigneDTO result = null;
+		Optional<Ligne> ligneOptional = ligneRepositoryCustom.getLigneByName(pNomLigne);
+		if (ligneOptional.isPresent())
+			return convertLigneToLigneDto(ligneOptional.get());
 		return result;
 	}
 
-	public void createModifyLigne(LigneDTO pLigneDto) {
-
+	public void createOrModifyLigne(LigneDTO pLigneDto) {
 		Ligne newLigne = convertLigneDtoToLigne(pLigneDto);
-
-		Ligne ligne = ligneRepositoryCustom.getLigneByName(pLigneDto.getNomLigne());
-		if (ligne != null) {
-			ligne.setCommentaire(newLigne.getCommentaire());
-			ligne.setNom(newLigne.getNom());
-			ligne.setStatut(newLigne.getStatut());
-			ligne.setType(newLigne.getType());
-		}
 		ligneRepository.save(newLigne);
 	}
 
 	public Ligne convertLigneDtoToLigne(LigneDTO pLigneDto) {
-		Ligne newLigne = new Ligne();
-		newLigne.setCommentaire(pLigneDto.getCommentaire());
-		newLigne.setNom(pLigneDto.getNomLigne());
-		newLigne.setStatut(pLigneDto.getStatut());
-		newLigne.setType(pLigneDto.getType());
 
-		for (GareDTO gareDTO : pLigneDto.getGaresDto()) {
-			newLigne.addGareLigne(new GaresLigne(
-					newLigne, gareRepositoryCustom.getGareByName(gareDTO.getGare()), gareDTO.getOrdre()));
+		Optional<Ligne> ligneOptional = ligneRepositoryCustom.getLigneByName(pLigneDto.getNomLigne());
+		Ligne ligne = null;
+		if (ligneOptional != null && ligneOptional.isPresent()) {
+			ligne = ligneOptional.get();
+			// Vider les gares avant l'ajout des nouvelles
+			ligneRepositoryCustom.deleteAllGaresOfLine(ligne.getLigneId());
+		} else {
+			ligne = new Ligne();
 		}
-		return newLigne;
+		ligne.setCommentaire(pLigneDto.getCommentaire());
+		ligne.setNom(pLigneDto.getNomLigne());
+		ligne.setStatut(pLigneDto.getStatut());
+		ligne.setType(pLigneDto.getType());
+
+		SortedSet<GaresLigne> garesLigne = new TreeSet<>();
+		// On ajoute les gares
+		for (GareDTO gareDTO : pLigneDto.getGaresDto()) {
+			Optional<Gare> gareOptional = gareRepositoryCustom.getGareByName(gareDTO.getGare());
+			if (!gareOptional.isPresent())
+				throw new IllegalArgumentException("Gare inconnue" + gareDTO.getGare());
+			garesLigne.add(
+					new GaresLigne(ligne, gareOptional.get(), gareDTO.getOrdre()));
+		}
+		ligne.setGaresLignes(garesLigne);
+		return ligne;
 	}
 
 	public LigneDTO convertLigneToLigneDto(Ligne pLigne) {
@@ -97,6 +104,10 @@ public class LigneManager {
 
 	public void setGareRepositoryCustom(GareRepositoryCustom gareRepositoryCustom) {
 		this.gareRepositoryCustom = gareRepositoryCustom;
+	}
+
+	public void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) {
+		this.ligneRepositoryCustom = ligneRepositoryCustom;
 	}
 
 }

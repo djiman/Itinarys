@@ -26,5 +26,6 @@ public class GareController {
     public Iterable<Gare> getGare() {
 		return gareRepository.findAll();
     }
+	// TODO createOrModifyGare
 	
 }

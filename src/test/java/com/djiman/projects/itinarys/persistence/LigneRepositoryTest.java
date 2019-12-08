@@ -128,7 +128,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneByNomLigne() {
-		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("PremiereLigne");
+		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("PremiereLigne").get();
 		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 2);
@@ -136,7 +136,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneAvecOrdre() {
-		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("Ligne");
+		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("Ligne").get();
 		List<GaresLigne> garesLigneFromBdd = new ArrayList<GaresLigne>(ligneFromBdd.getGaresLignes());
 
 		assertTrue(ligneFromBdd != null);
@@ -146,4 +146,5 @@ public class LigneRepositoryTest {
 		assertEquals(2, garesLigneFromBdd.get(1).getOrdre().intValue());
 		assertEquals(3, garesLigneFromBdd.get(2).getOrdre().intValue());
 	}
+
 }
