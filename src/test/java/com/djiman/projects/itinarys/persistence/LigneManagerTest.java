@@ -13,8 +13,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.djiman.projects.itinarys.dto.GareDTO;
@@ -26,12 +29,13 @@ import com.djiman.projects.itinarys.model.GaresLigne;
 import com.djiman.projects.itinarys.model.Ligne;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 @Configuration
+@ActiveProfiles("test")
 @ComponentScan("com.djiman.projects.itinarys.manager")
 public class LigneManagerTest {
 
-	// @Autowired
-	// TODO Utiliser Spring pour injecter le manager
+	@Autowired
 	private LigneManager ligneManager;
 
 	@Mock
@@ -43,7 +47,6 @@ public class LigneManagerTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		ligneManager = new LigneManager();
 		ligneManager.setLigneRepositoryCustom(ligneRepositoryCustom);
 		ligneManager.setGareRepositoryCustom(gareRepositoryCustom);
 	}
