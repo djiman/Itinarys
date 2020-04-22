@@ -59,7 +59,7 @@ public class LigneManagerTest {
 		ligneDto.setStatut('1');
 		ligneDto.setType("Train");
 		List<GareDTO> garesDto = new ArrayList<>();
-		GareDTO gareDto = new GareDTO("nom gare", 1);
+		GareDTO gareDto = new GareDTO("nom gare", 1, "");
 		garesDto.add(gareDto);
 		ligneDto.setGaresDto(garesDto);
 		Gare gareExpected = new Gare();
@@ -81,9 +81,9 @@ public class LigneManagerTest {
 		Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
 		Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
 
-		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 1);
+		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 1, "D");
 		ligne.addGareLigne(garesLigne1);
-		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 2);
+		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 2, "T");
 		ligne.addGareLigne(garesLigne2);
 
 		LigneDTO ligneDTO = ligneManager.convertLigneToLigneDto(ligne);

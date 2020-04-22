@@ -45,13 +45,17 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 	@Column(name = "ORDRE", nullable = false)
 	private Integer ordre;
 
+	@Column(name = "TYPE")
+	private String type;
+
 	public GaresLigne() {
 	}
 
-	public GaresLigne(Ligne ligne, Gare gare, Integer ordre) {
+	public GaresLigne(Ligne ligne, Gare gare, Integer ordre, String type) {
 		this.ligne = ligne;
 		this.gare = gare;
 		this.ordre = ordre;
+		this.type = type;
 	}
 
 	public long getId() {
@@ -84,6 +88,14 @@ public class GaresLigne implements Serializable, Comparable<GaresLigne> {
 
 	public void setGare(Gare gare) {
 		this.gare = gare;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override

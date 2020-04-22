@@ -80,7 +80,7 @@ public class LigneManager {
 			if (!gareOptional.isPresent())
 				throw new IllegalArgumentException("Gare inconnue" + gareDTO.getGare());
 			garesLigne.add(
-					new GaresLigne(ligne, gareOptional.get(), gareDTO.getOrdre()));
+					new GaresLigne(ligne, gareOptional.get(), gareDTO.getOrdre(), gareDTO.getType()));
 		}
 		ligne.setGaresLignes(garesLigne);
 		return ligne;
@@ -94,7 +94,7 @@ public class LigneManager {
 		result.setType(pLigne.getType());
 		List<GareDTO> garesDto = new ArrayList<>();
 		for (GaresLigne gareLigne : pLigne.getGaresLignes()) {
-			GareDTO gareDto = new GareDTO(gareLigne.getGare().getNom(), gareLigne.getOrdre());
+			GareDTO gareDto = new GareDTO(gareLigne.getGare().getNom(), gareLigne.getOrdre(), gareLigne.getType());
 			garesDto.add(gareDto);
 		}
 		garesDto.sort(new GareDtoComparator());

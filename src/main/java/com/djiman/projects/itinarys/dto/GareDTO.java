@@ -13,13 +13,16 @@ public class GareDTO implements Serializable {
 
 	private int ordre;
 
+	private String type;
+
 	public GareDTO() {
 		// Default constructor
 	}
 
-	public GareDTO(String gare, int ordre) {
+	public GareDTO(String gare, int ordre, String type) {
 		this.nomGare = gare;
 		this.ordre = ordre;
+		this.type = type;
 	}
 
 	public String getGare() {
@@ -36,5 +39,13 @@ public class GareDTO implements Serializable {
 
 	public void setOrdre(int ordre) {
 		this.ordre = ordre;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

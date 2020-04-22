@@ -52,11 +52,11 @@ public class LigneRepositoryTest {
 
 		// Ligne
 		ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
-		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 2);
+		GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 2, null);
 
-		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 3);
+		GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 3, "T");
 
-		GaresLigne garesLigne3 = new GaresLigne(ligne, gare3, 1);
+		GaresLigne garesLigne3 = new GaresLigne(ligne, gare3, 1, "D");
 		Set<GaresLigne> gareLigne1 = new HashSet<>();
 		gareLigne1.add(garesLigne1);
 		gareLigne1.add(garesLigne2);
@@ -66,8 +66,8 @@ public class LigneRepositoryTest {
 		// Ligne1
 		ligne1 = ModelHelper.ligneBuilder("PremiereLigne", "Test ligne", '0', "Train");
 		Set<GaresLigne> gareLigne2 = new HashSet<>();
-		gareLigne2.add(new GaresLigne(ligne1, gare, 1));
-		gareLigne2.add(new GaresLigne(ligne1, gare2, 2));
+		gareLigne2.add(new GaresLigne(ligne1, gare, 1, null));
+		gareLigne2.add(new GaresLigne(ligne1, gare2, 2, null));
 		ligne1.getGaresLignes().addAll(gareLigne2);
 
 		// Ligne2
@@ -137,7 +137,7 @@ public class LigneRepositoryTest {
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneAvecOrdre() {
 		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("Ligne").get();
-		List<GaresLigne> garesLigneFromBdd = new ArrayList<GaresLigne>(ligneFromBdd.getGaresLignes());
+		List<GaresLigne> garesLigneFromBdd = new ArrayList<>(ligneFromBdd.getGaresLignes());
 
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 3);
