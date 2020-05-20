@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * @author gorguindong Initial version 1.0.0
  */
 
-@CrossOrigin(origins = "http://52.47.36.15")
+@CrossOrigin
 @RestController
 public class LigneController {
 
