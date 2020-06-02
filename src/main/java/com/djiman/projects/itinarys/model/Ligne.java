@@ -43,8 +43,11 @@ public class Ligne {
 	@Column(name = "commentaire", length = 4000)
 	private String commentaire;
 
+	@Column(name = "couleur", length = 45)
+	private String couleur;
+
 	@OneToMany(mappedBy = "ligne", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<GaresLigne> garesLignes = new TreeSet<GaresLigne>();
+	private Set<GaresLigne> garesLignes = new TreeSet<>();
 
 	public Ligne() {
 	}
@@ -100,6 +103,14 @@ public class Ligne {
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
+	}
+
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
 	}
 
 	public Set<GaresLigne> getGaresLignes() {

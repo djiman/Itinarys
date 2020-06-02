@@ -92,6 +92,7 @@ public class LigneManager {
 		result.setNomLigne(pLigne.getNom());
 		result.setStatut(pLigne.getStatut());
 		result.setType(pLigne.getType());
+		result.setCouleur(pLigne.getCouleur());
 		List<GareDTO> garesDto = new ArrayList<>();
 		for (GaresLigne gareLigne : pLigne.getGaresLignes()) {
 			GareDTO gareDto = new GareDTO(gareLigne.getGare().getNom(), gareLigne.getOrdre(), gareLigne.getType());

@@ -13,6 +13,7 @@ public class LigneDTO implements Serializable {
 	private String commentaire;
 	private Character statut;
 	private String type;
+	private String couleur;
 	List<GareDTO> garesDto;
 
 	public String getNomLigne() {
@@ -45,6 +46,14 @@ public class LigneDTO implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
 	}
 
 	public List<GareDTO> getGaresDto() {
