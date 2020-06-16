@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -106,10 +103,10 @@ public class LigneRepositoryTest {
 		Ligne ligne1 = new LigneBuilder().commentaire("Test ligne").nomLigne("PremiereLigne").statut('0')
 				.typeTransport("Train").build();
 		ligneRepository.save(ligne1);
-		Ligne ligneFromBdd = ligneRepository.findOne(ligne1.getLigneId());
+		Optional<Ligne> ligneFromBdd = ligneRepository.findById(ligne1.getLigneId());
 		assertTrue(ligneFromBdd != null);
-		assertEquals("PremiereLigne", ligneFromBdd.getNom());
-		assertEquals("Train", ligneFromBdd.getType());
+		assertEquals("PremiereLigne", ligneFromBdd.get().getNom());
+		assertEquals("Train", ligneFromBdd.get().getType());
 	}
 
 	@Test
@@ -120,8 +117,8 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigne() {
-		Ligne ligneFromBdd = ligneRepository.findOne(ligne.getLigneId());
-		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
+		Optional<Ligne> ligneFromBdd = ligneRepository.findById(ligne.getLigneId());
+		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.get().getGaresLignes();
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 3);
 	}
