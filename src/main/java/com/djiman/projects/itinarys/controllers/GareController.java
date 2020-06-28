@@ -17,13 +17,16 @@ import com.djiman.projects.itinarys.persistence.GareRepository;
  * Initial version 1.0.0
  */
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class GareController {
 
-	@Autowired
 	GareRepository gareRepository;
-	
+
+	public GareController(GareRepository gareRepository) {
+		this.gareRepository = gareRepository;
+	}
+
 	@RequestMapping("/gare")
     public Iterable<Gare> getGare() {
 		return gareRepository.findAll();

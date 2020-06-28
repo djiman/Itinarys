@@ -31,17 +31,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 @RestController
 public class LigneController {
 
-	@Autowired
 	LigneRepository ligneRepository;
 
-	@Autowired
 	GareRepository gareRepository;
 
-	@Autowired
 	LigneManager ligneManager;
 
-	@Autowired
 	LigneRepositoryCustom ligneRepositoryCustom;
+
+	public LigneController(LigneRepository ligneRepository, GareRepository gareRepository, LigneManager ligneManager, LigneRepositoryCustom ligneRepositoryCustom) {
+		this.ligneRepository = ligneRepository;
+		this.gareRepository = gareRepository;
+		this.ligneManager = ligneManager;
+		this.ligneRepositoryCustom = ligneRepositoryCustom;
+	}
 
 	@ApiOperation(value = "get Lignes",notes = "Recupere toutes les lignes")
 	@RequestMapping("/lignes")
