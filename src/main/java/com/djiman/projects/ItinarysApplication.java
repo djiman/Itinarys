@@ -16,13 +16,4 @@ public class ItinarysApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ItinarysApplication.class, args);
 	}
-
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build();
-	}
 }
