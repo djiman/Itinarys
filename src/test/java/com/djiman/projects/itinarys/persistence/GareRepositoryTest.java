@@ -5,19 +5,21 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.djiman.projects.builder.GareBuilder;
 import com.djiman.projects.itinarys.model.Gare;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@ComponentScan("com.djiman.projects.itinarys")
+@SpringBootTest
 public class GareRepositoryTest {
 
 	@Autowired
@@ -38,8 +40,9 @@ public class GareRepositoryTest {
 
 	@Test
 	public void testSavePlusieursGares() {
+		gareRepository.deleteAll();
 		buildAndSaveGares();
-		List<Gare> garesFromBDD = (List<Gare>) gareRepository.findAll();
+		List<Gare> garesFromBDD =  gareRepository.findAll();
 		assertFalse(garesFromBDD.isEmpty());
 		assertEquals(4, garesFromBDD.size());
 	}

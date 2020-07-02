@@ -30,9 +30,6 @@ import com.djiman.projects.itinarys.model.Ligne;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Configuration
-@ActiveProfiles("test")
-@ComponentScan("com.djiman.projects.itinarys.manager")
 public class LigneManagerTest {
 
 	@Autowired
