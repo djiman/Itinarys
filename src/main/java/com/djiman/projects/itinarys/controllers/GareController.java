@@ -4,9 +4,8 @@
 package com.djiman.projects.itinarys.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.djiman.projects.itinarys.model.Gare;
@@ -27,7 +26,7 @@ public class GareController {
 		this.gareRepository = gareRepository;
 	}
 
-	@RequestMapping("/gare")
+	@GetMapping("/gare")
     public Iterable<Gare> getGare() {
 		return gareRepository.findAll();
     }
