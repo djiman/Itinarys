@@ -113,18 +113,8 @@ public class LigneManagerImpl implements LigneManager {
     }
 
     @Override
-    public LigneRepository getLigneRepository() {
-        return ligneRepository;
-    }
-
-    @Override
     public void setLigneRepository(LigneRepository ligneRepository) {
         this.ligneRepository = ligneRepository;
-    }
-
-    @Override
-    public GareRepository getGareRepository() {
-        return gareRepository;
     }
 
     @Override

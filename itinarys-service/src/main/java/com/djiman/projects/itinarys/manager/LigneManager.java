@@ -9,25 +9,21 @@ import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 
 public interface LigneManager {
 
-	public Iterable<LigneDTO> getAllLignes() ;
+	Iterable<LigneDTO> getAllLignes() ;
 
-	public LigneDTO getLigneByName(String pNomLigne);
+	LigneDTO getLigneByName(String pNomLigne);
 
-	public void createOrModifyLigne(LigneDTO pLigneDto) ;
+	void createOrModifyLigne(LigneDTO pLigneDto) ;
 
-	public Ligne convertLigneDtoToLigne(LigneDTO pLigneDto);
+	Ligne convertLigneDtoToLigne(LigneDTO pLigneDto);
 
-	public LigneDTO convertLigneToLigneDto(Ligne pLigne);
+	LigneDTO convertLigneToLigneDto(Ligne pLigne);
 
-	public void setGareRepositoryCustom(GareRepositoryCustom gareRepositoryCustom);
+	void setGareRepositoryCustom(GareRepositoryCustom gareRepositoryCustom);
 
-	public void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) ;
+	void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) ;
 
-	public GareRepository getGareRepository();
+	void setGareRepository(GareRepository gareRepository);
 
-	public void setGareRepository(GareRepository gareRepository);
-
-	public LigneRepository getLigneRepository();
-
-	public void setLigneRepository(LigneRepository ligneRepository);
+	void setLigneRepository(LigneRepository ligneRepository);
 }
