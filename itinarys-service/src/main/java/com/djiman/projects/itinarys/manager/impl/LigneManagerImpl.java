@@ -14,7 +14,6 @@ import com.djiman.projects.itinarys.persistence.model.Gare;
 import com.djiman.projects.itinarys.persistence.model.GaresLigne;
 import com.djiman.projects.itinarys.persistence.model.Ligne;
 import com.djiman.projects.itinarys.persistence.GareRepository;
-import com.djiman.projects.itinarys.persistence.GareRepositoryCustom;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import com.djiman.projects.itinarys.util.GareDtoComparator;
@@ -32,9 +31,6 @@ public class LigneManagerImpl implements LigneManager {
 
     @Autowired
     LigneRepositoryCustom ligneRepositoryCustom;
-
-    @Autowired
-    GareRepositoryCustom gareRepositoryCustom;
 
     public Iterable<LigneDTO> getAllLignes() {
         List<Ligne> result = ligneRepository.findAll();
@@ -77,7 +73,7 @@ public class LigneManagerImpl implements LigneManager {
         SortedSet<GaresLigne> garesLigne = new TreeSet<>();
         // On ajoute les gares
         for (GareDTO gareDTO : pLigneDto.getGaresDto()) {
-            Optional<Gare> gareOptional = gareRepositoryCustom.getGareByName(gareDTO.getGare());
+            Optional<Gare> gareOptional = gareRepository.getGareByNom(gareDTO.getGare());
             if (!gareOptional.isPresent())
                 throw new IllegalArgumentException("Gare inconnue" + gareDTO.getGare());
             garesLigne.add(
@@ -103,11 +99,6 @@ public class LigneManagerImpl implements LigneManager {
         result.setGaresDto(garesDto);
         return result;
     }
-
-    public void setGareRepositoryCustom(GareRepositoryCustom gareRepositoryCustom) {
-        this.gareRepositoryCustom = gareRepositoryCustom;
-    }
-
     public void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) {
         this.ligneRepositoryCustom = ligneRepositoryCustom;
     }
@@ -124,10 +115,6 @@ public class LigneManagerImpl implements LigneManager {
 
     public LigneRepositoryCustom getLigneRepositoryCustom() {
         return ligneRepositoryCustom;
-    }
-
-    public GareRepositoryCustom getGareRepositoryCustom() {
-        return gareRepositoryCustom;
     }
 }
 

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import com.djiman.projects.itinarys.manager.impl.LigneManagerImpl;
 import com.djiman.projects.itinarys.persistence.GareRepository;
-import com.djiman.projects.itinarys.persistence.GareRepositoryCustom;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import org.junit.Before;
@@ -37,9 +36,6 @@ public class LigneManagerTest {
     private LigneRepositoryCustom ligneRepositoryCustom;
 
     @MockBean
-    private GareRepositoryCustom gareRepositoryCustom;
-
-    @MockBean
     private LigneRepository ligneRepository;
 
     @MockBean
@@ -49,7 +45,6 @@ public class LigneManagerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         ligneManager.setLigneRepositoryCustom(ligneRepositoryCustom);
-        ligneManager.setGareRepositoryCustom(gareRepositoryCustom);
         ligneManager.setLigneRepository(ligneRepository);
         ligneManager.setGareRepository(gareRepository);
     }
@@ -68,7 +63,7 @@ public class LigneManagerTest {
         Gare gareExpected = new Gare();
         gareExpected.setNom("nom gare");
         Optional<Gare> opt = Optional.of(gareExpected);
-        Mockito.when(gareRepositoryCustom.getGareByName("nom gare")).thenReturn(opt);
+        Mockito.when(gareRepository.getGareByNom("nom gare")).thenReturn(opt);
 
         Ligne ligne = ligneManager.convertLigneDtoToLigne(ligneDto);
         assertEquals("Test Nom Ligne", ligne.getNom());

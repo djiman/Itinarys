@@ -4,7 +4,6 @@ import com.djiman.projects.itinarys.dto.LigneDTO;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
 import com.djiman.projects.itinarys.persistence.model.Ligne;
-import com.djiman.projects.itinarys.persistence.GareRepositoryCustom;
 import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 
 public interface LigneManager {
@@ -18,8 +17,6 @@ public interface LigneManager {
 	Ligne convertLigneDtoToLigne(LigneDTO pLigneDto);
 
 	LigneDTO convertLigneToLigneDto(Ligne pLigne);
-
-	void setGareRepositoryCustom(GareRepositoryCustom gareRepositoryCustom);
 
 	void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) ;
 

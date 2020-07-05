@@ -21,9 +21,6 @@ public class GareRepositoryTest {
 	@Autowired
 	GareRepository gareRepository;
 
-	@Autowired
-	GareRepositoryCustom gareRepositoryCustom;
-
 	@Test
 	public void testSaveUneGare() {
 		Gare gare = new GareBuilder().commentaire("Test gare").nomGare("PremiereGare").statut('0').ville("Gare1")
