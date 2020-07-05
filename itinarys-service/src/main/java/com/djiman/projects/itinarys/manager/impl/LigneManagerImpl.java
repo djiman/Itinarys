@@ -15,7 +15,6 @@ import com.djiman.projects.itinarys.persistence.model.GaresLigne;
 import com.djiman.projects.itinarys.persistence.model.Ligne;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
-import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import com.djiman.projects.itinarys.util.GareDtoComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +28,6 @@ public class LigneManagerImpl implements LigneManager {
     @Autowired
     GareRepository gareRepository;
 
-    @Autowired
-    LigneRepositoryCustom ligneRepositoryCustom;
-
     public Iterable<LigneDTO> getAllLignes() {
         List<Ligne> result = ligneRepository.findAll();
         List<LigneDTO> resultDTO = new ArrayList<>();
@@ -43,7 +39,7 @@ public class LigneManagerImpl implements LigneManager {
 
     public LigneDTO getLigneByName(String pNomLigne) {
         LigneDTO result = null;
-        Optional<Ligne> ligneOptional = ligneRepositoryCustom.getLigneByName(pNomLigne);
+        Optional<Ligne> ligneOptional = ligneRepository.getLigneByNom(pNomLigne);
         if (ligneOptional.isPresent())
             return convertLigneToLigneDto(ligneOptional.get());
         return result;
@@ -56,12 +52,12 @@ public class LigneManagerImpl implements LigneManager {
 
     public Ligne convertLigneDtoToLigne(LigneDTO pLigneDto) {
 
-        Optional<Ligne> ligneOptional = ligneRepositoryCustom.getLigneByName(pLigneDto.getNomLigne());
+        Optional<Ligne> ligneOptional = ligneRepository.getLigneByNom(pLigneDto.getNomLigne());
         Ligne ligne = null;
         if (ligneOptional != null && ligneOptional.isPresent()) {
             ligne = ligneOptional.get();
             // Vider les gares avant l'ajout des nouvelles
-            ligneRepositoryCustom.deleteAllGaresOfLine(ligne.getLigneId());
+            ligneRepository.deleteById(ligne.getLigneId());
         } else {
             ligne = new Ligne();
         }
@@ -99,9 +95,6 @@ public class LigneManagerImpl implements LigneManager {
         result.setGaresDto(garesDto);
         return result;
     }
-    public void setLigneRepositoryCustom(LigneRepositoryCustom ligneRepositoryCustom) {
-        this.ligneRepositoryCustom = ligneRepositoryCustom;
-    }
 
     @Override
     public void setLigneRepository(LigneRepository ligneRepository) {
@@ -113,8 +106,5 @@ public class LigneManagerImpl implements LigneManager {
         this.gareRepository = gareRepository;
     }
 
-    public LigneRepositoryCustom getLigneRepositoryCustom() {
-        return ligneRepositoryCustom;
-    }
 }
 

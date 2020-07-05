@@ -24,9 +24,6 @@ import static org.junit.Assert.*;
 public class LigneRepositoryTest {
 
 	@Autowired
-	LigneRepositoryCustom ligneRepositoryCustom;
-
-	@Autowired
 	LigneRepository ligneRepository;
 
 	@Autowired
@@ -123,7 +120,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneByNomLigne() {
-		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("PremiereLigne").get();
+		Ligne ligneFromBdd = ligneRepository.getLigneByNom("PremiereLigne").get();
 		Set<GaresLigne> garesLigneFromBdd = ligneFromBdd.getGaresLignes();
 		assertTrue(ligneFromBdd != null);
 		assertTrue(garesLigneFromBdd.size() == 2);
@@ -131,7 +128,7 @@ public class LigneRepositoryTest {
 
 	@Test
 	public void testRecupererToutesLesGaresDuneLigneAvecOrdre() {
-		Ligne ligneFromBdd = ligneRepositoryCustom.getLigneByName("Ligne").get();
+		Ligne ligneFromBdd = ligneRepository.getLigneByNom("Ligne").get();
 		List<GaresLigne> garesLigneFromBdd = new ArrayList<>(ligneFromBdd.getGaresLignes());
 
 		assertTrue(ligneFromBdd != null);

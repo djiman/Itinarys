@@ -9,7 +9,6 @@ import java.util.Optional;
 import com.djiman.projects.itinarys.manager.impl.LigneManagerImpl;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
-import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +32,6 @@ public class LigneManagerTest {
     private final LigneManager ligneManager = Mockito.spy(LigneManagerImpl.class);
 
     @MockBean
-    private LigneRepositoryCustom ligneRepositoryCustom;
-
-    @MockBean
     private LigneRepository ligneRepository;
 
     @MockBean
@@ -44,7 +40,6 @@ public class LigneManagerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ligneManager.setLigneRepositoryCustom(ligneRepositoryCustom);
         ligneManager.setLigneRepository(ligneRepository);
         ligneManager.setGareRepository(gareRepository);
     }

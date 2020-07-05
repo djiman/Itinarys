@@ -13,7 +13,6 @@ import com.djiman.projects.itinarys.dto.LigneDTO;
 import com.djiman.projects.itinarys.manager.LigneManager;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
-import com.djiman.projects.itinarys.persistence.LigneRepositoryCustom;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.swagger.annotations.ApiOperation;
@@ -33,13 +32,10 @@ public class LigneController {
 
     LigneManager ligneManager;
 
-    LigneRepositoryCustom ligneRepositoryCustom;
-
-    public LigneController(LigneRepository ligneRepository, GareRepository gareRepository, LigneManager ligneManager, LigneRepositoryCustom ligneRepositoryCustom) {
+    public LigneController(LigneRepository ligneRepository, GareRepository gareRepository, LigneManager ligneManager) {
         this.ligneRepository = ligneRepository;
         this.gareRepository = gareRepository;
         this.ligneManager = ligneManager;
-        this.ligneRepositoryCustom = ligneRepositoryCustom;
     }
 
     @ApiOperation(value = "get Lignes", notes = "Recupere toutes les lignes")
