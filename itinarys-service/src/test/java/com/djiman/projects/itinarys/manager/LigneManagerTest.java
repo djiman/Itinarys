@@ -9,6 +9,7 @@ import java.util.Optional;
 import com.djiman.projects.itinarys.manager.impl.LigneManagerImpl;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,6 @@ import com.djiman.projects.itinarys.dto.GareDTO;
 import com.djiman.projects.itinarys.dto.LigneDTO;
 import com.djiman.projects.itinarys.helper.ModelHelper;
 import com.djiman.projects.itinarys.persistence.model.Gare;
-import com.djiman.projects.itinarys.persistence.model.GaresLigne;
 import com.djiman.projects.itinarys.persistence.model.Ligne;
 
 @RunWith(SpringRunner.class)
@@ -56,16 +56,18 @@ public class LigneManagerTest {
         garesDto.add(gareDto);
         ligneDto.setGaresDto(garesDto);
         Gare gareExpected = new Gare();
+        ObjectId gareId = new ObjectId();
+        gareExpected.set_id(gareId);
         gareExpected.setNom("nom gare");
         Optional<Gare> opt = Optional.of(gareExpected);
         Mockito.when(gareRepository.getGareByNom("nom gare")).thenReturn(opt);
 
         Ligne ligne = ligneManager.convertLigneDtoToLigne(ligneDto);
-        assertEquals("Test Nom Ligne", ligne.getNom());
-        assertEquals("Train", ligne.getType());
-        assertEquals("Test Ligne Dto", ligne.getCommentaire());
-        assertEquals('1', ligne.getStatut().charValue());
-        assertEquals("nom gare", ligne.getGaresLignes().iterator().next().getGare().getNom());
+        assertEquals(ligneDto.getNomLigne(), ligne.getNom());
+        assertEquals(ligneDto.getType(), ligne.getType());
+        assertEquals(ligneDto.getCommentaire(), ligne.getCommentaire());
+        assertEquals(ligneDto.getStatut(), ligne.getStatut());
+        assertEquals(gareExpected.get_id(), ligne.getGare_ids().get(0));
     }
 
     @Test
@@ -74,15 +76,19 @@ public class LigneManagerTest {
         Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
         Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
 
-        GaresLigne garesLigne1 = new GaresLigne(ligne, gare, 1, "D");
-        ligne.addGareLigne(garesLigne1);
-        GaresLigne garesLigne2 = new GaresLigne(ligne, gare2, 2, "T");
-        ligne.addGareLigne(garesLigne2);
+        ligne.addGare(gare.get_id());
+        ligne.addGare(gare2.get_id());
+
+        Optional<Gare> optionalGare = Optional.of(gare);
+        Optional<Gare> optionalGare2 = Optional.of(gare2);
+
+        Mockito.when(gareRepository.findById(gare.get_id())).thenReturn(optionalGare);
+        Mockito.when(gareRepository.findById(gare2.get_id())).thenReturn(optionalGare2);
 
         LigneDTO ligneDTO = ligneManager.convertLigneToLigneDto(ligne);
-        assertEquals("Ligne", ligneDTO.getNomLigne());
-        assertEquals("Test ligne", ligneDTO.getCommentaire());
-        assertEquals('0', ligneDTO.getStatut().charValue());
+        assertEquals(ligne.getNom(), ligneDTO.getNomLigne());
+        assertEquals(ligne.getCommentaire(), ligneDTO.getCommentaire());
+        assertEquals(ligne.getStatut(), ligneDTO.getStatut());
         assertEquals(2, ligneDTO.getGaresDto().size());
     }
 
