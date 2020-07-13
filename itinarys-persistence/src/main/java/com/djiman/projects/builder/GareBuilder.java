@@ -1,20 +1,21 @@
 package com.djiman.projects.builder;
 
 import com.djiman.projects.itinarys.persistence.model.Gare;
+import org.bson.types.ObjectId;
 
 /**
  * @author gorguindong Initial version 1.0.0
  */
 public class GareBuilder {
 
-	private Long gareId;
+	private ObjectId _id;
 	private String nomGare;
 	private Character statut;
 	private String ville;
 	private String commentaire;
 
-	public GareBuilder gareId(Long gareId) {
-		this.gareId = gareId;
+	public GareBuilder _id(ObjectId _id) {
+		this._id = _id;
 		return this;
 	}
 
@@ -40,7 +41,7 @@ public class GareBuilder {
 
 	public Gare build() {
 		Gare gare = new Gare();
-		gare.setGareId(this.gareId);
+		gare.set_id(this._id);
 		gare.setCommentaire(this.commentaire);
 		gare.setNom(this.nomGare);
 		gare.setStatut(this.statut);

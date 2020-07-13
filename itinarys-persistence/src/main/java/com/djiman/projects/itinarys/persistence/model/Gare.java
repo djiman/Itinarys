@@ -1,59 +1,36 @@
 package com.djiman.projects.itinarys.persistence.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
-import javax.persistence.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author gorguindong Initial version 1.0.0
  */
-@Entity
-@Table(name = "Gare")
+
+@Document(collection = "gare")
 public class Gare {
 
 	@Id
-	@Column(name = "GareID")
-	@GeneratedValue(generator = "SEQ_GARE")
-	@GenericGenerator(name = "SEQ_GARE", strategy = "increment", parameters = {
-			@Parameter(name = "sequence_name", value = "ITINARYS_GAR"), @Parameter(name = "optimizer", value = "none"),
-			@Parameter(name = "initial_value", value = "1"), @Parameter(name = "increment_size", value = "1") })
-	private Long gareId;
+	private ObjectId _id;
 
-	@Column(name = "Nom", nullable = false)
 	private String nom;
 
-	@Column(name = "Statut", length = 1)
 	private Character statut;
 
-	@Column(name = "Ville", length = 100)
 	private String ville;
 
-	@Column(name = "commentaire", length = 4000)
 	private String commentaire;
 
 	public Gare() {
 	}
 
-	public Gare(Long gareId, String nom) {
-		this.gareId = gareId;
-		this.nom = nom;
+	public ObjectId get_id() {
+		return this._id;
 	}
 
-	public Gare(Long gareId, String nom, Character statut, String ville, String commentaire) {
-		this.gareId = gareId;
-		this.nom = nom;
-		this.statut = statut;
-		this.ville = ville;
-		this.commentaire = commentaire;
-	}
-
-	public Long getGareId() {
-		return this.gareId;
-	}
-
-	public void setGareId(Long gareId) {
-		this.gareId = gareId;
+	public void set_id(ObjectId _id) {
+		this._id = _id;
 	}
 
 	public String getNom() {
