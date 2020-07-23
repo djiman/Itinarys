@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    volumes:
+    - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    - ./mongodb:/data/db
+    ports:
+    - 27017:27017
+  app:
+    image: itinarys
+    ports:
+      - 8083:8083
+    links:
+      - mongodb
