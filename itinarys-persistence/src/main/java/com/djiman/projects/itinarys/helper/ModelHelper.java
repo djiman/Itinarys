@@ -8,8 +8,8 @@ import org.bson.types.ObjectId;
 
 public class ModelHelper {
 
-	public static Gare gareBuilder(String pNomGare, String pCommentaire, Character pStatut, String pVille) {
-		return new GareBuilder().commentaire(pCommentaire).nomGare(pNomGare).statut(pStatut).ville(pVille).build();
+	public static Gare gareBuilder(String pIdGare, String pNomGare, String pCommentaire, Character pStatut, String pVille) {
+		return new GareBuilder().commentaire(pCommentaire).nomGare(pNomGare).statut(pStatut).ville(pVille).idGare(pIdGare).build();
 	}
 
 	public static Ligne ligneBuilder(String pNomLigne, String pCommentaire, Character pStatut, String pTypeTransport) {

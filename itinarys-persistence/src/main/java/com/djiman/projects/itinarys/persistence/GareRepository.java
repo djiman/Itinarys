@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface GareRepository extends MongoRepository<Gare, ObjectId> {
     Optional<Gare> getGareByNom(String nomGare);
+
+    Optional<Gare> getByIdGare(String gareId);
 }

@@ -22,6 +22,8 @@ public class Gare {
 
 	private String commentaire;
 
+	private String idGare;
+
 	public Gare() {
 	}
 
@@ -65,4 +67,7 @@ public class Gare {
 		this.commentaire = commentaire;
 	}
 
+	public String getIdGare() { return idGare; }
+
+	public void setIdGare(String idGare) { this.idGare = idGare; }
 }

@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 public class GareBuilder {
 
 	private ObjectId _id;
+	private String idGare;
 	private String nomGare;
 	private Character statut;
 	private String ville;
@@ -16,6 +17,11 @@ public class GareBuilder {
 
 	public GareBuilder _id(ObjectId _id) {
 		this._id = _id;
+		return this;
+	}
+
+	public GareBuilder idGare(String idGare) {
+		this.idGare = idGare;
 		return this;
 	}
 
@@ -42,6 +48,7 @@ public class GareBuilder {
 	public Gare build() {
 		Gare gare = new Gare();
 		gare.set_id(this._id);
+		gare.setIdGare(this.idGare);
 		gare.setCommentaire(this.commentaire);
 		gare.setNom(this.nomGare);
 		gare.setStatut(this.statut);

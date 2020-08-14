@@ -59,6 +59,7 @@ public class LigneManagerTest {
         ObjectId gareId = new ObjectId();
         gareExpected.set_id(gareId);
         gareExpected.setNom("nom gare");
+        gareExpected.setIdGare("idGare");
         Optional<Gare> opt = Optional.of(gareExpected);
         Mockito.when(gareRepository.getGareByNom("nom gare")).thenReturn(opt);
 
@@ -67,23 +68,23 @@ public class LigneManagerTest {
         assertEquals(ligneDto.getType(), ligne.getType());
         assertEquals(ligneDto.getCommentaire(), ligne.getCommentaire());
         assertEquals(ligneDto.getStatut(), ligne.getStatut());
-        assertEquals(gareExpected.get_id(), ligne.getGare_ids().get(0));
+        assertEquals(gareExpected.getIdGare(), ligne.getGare_ids().get(0));
     }
 
     @Test
     public void testConvertLigneToLigneDto() {
         Ligne ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
-        Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
-        Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
+        Gare gare = ModelHelper.gareBuilder("PG","PremiereGare", "Test gare", '0', "Ville1");
+        Gare gare2 = ModelHelper.gareBuilder("DG","DeuxiemeGare", "Test gare 2", '0', "Ville2");
 
-        ligne.addGare(gare.get_id());
-        ligne.addGare(gare2.get_id());
+        ligne.addGare(gare.getIdGare());
+        ligne.addGare(gare2.getIdGare());
 
         Optional<Gare> optionalGare = Optional.of(gare);
         Optional<Gare> optionalGare2 = Optional.of(gare2);
 
-        Mockito.when(gareRepository.findById(gare.get_id())).thenReturn(optionalGare);
-        Mockito.when(gareRepository.findById(gare2.get_id())).thenReturn(optionalGare2);
+        Mockito.when(gareRepository.getByIdGare(gare.getIdGare())).thenReturn(optionalGare);
+        Mockito.when(gareRepository.getByIdGare(gare2.getIdGare())).thenReturn(optionalGare2);
 
         LigneDTO ligneDTO = ligneManager.convertLigneToLigneDto(ligne);
         assertEquals(ligne.getNom(), ligneDTO.getNomLigne());

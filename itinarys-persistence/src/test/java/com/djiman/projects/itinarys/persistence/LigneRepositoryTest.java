@@ -33,9 +33,9 @@ public class LigneRepositoryTest {
         gareRepository.deleteAll();
         ligneRepository.deleteAll();
 
-        Gare gare = ModelHelper.gareBuilder("PremiereGare", "Test gare", '0', "Ville1");
-        Gare gare2 = ModelHelper.gareBuilder("DeuxiemeGare", "Test gare 2", '0', "Ville2");
-        Gare gare3 = ModelHelper.gareBuilder("TroisiemeGare", "Test gare 3", '0', "Ville3");
+        Gare gare = ModelHelper.gareBuilder("PG", "PremiereGare", "Test gare", '0', "Ville1");
+        Gare gare2 = ModelHelper.gareBuilder("DG", "DeuxiemeGare", "Test gare 2", '0', "Ville2");
+        Gare gare3 = ModelHelper.gareBuilder("TG","TroisiemeGare", "Test gare 3", '0', "Ville3");
 
         gareRepository.save(gare);
         gareRepository.save(gare2);
@@ -44,17 +44,17 @@ public class LigneRepositoryTest {
         // Ligne
         ligne = ModelHelper.ligneBuilder("Ligne", "Test ligne", '0', "Train");
 
-        List<ObjectId> gareIds = new ArrayList<>();
-        gareIds.add(gare3.get_id());
-        gareIds.add(gare.get_id());
-        gareIds.add(gare2.get_id());
+        List<String> gareIds = new ArrayList<>();
+        gareIds.add(gare3.getIdGare());
+        gareIds.add(gare.getIdGare());
+        gareIds.add(gare2.getIdGare());
         ligne.getGare_ids().addAll(gareIds);
 
         // Ligne1
         ligne1 = ModelHelper.ligneBuilder("PremiereLigne", "Test ligne", '0', "Train");
-        List<ObjectId> gareIds2 = new ArrayList<>();
-        gareIds2.add(gare.get_id());
-        gareIds2.add(gare2.get_id());
+        List<String> gareIds2 = new ArrayList<>();
+        gareIds2.add(gare.getIdGare());
+        gareIds2.add(gare2.getIdGare());
         ligne1.getGare_ids().addAll(gareIds2);
 
         // Ligne2
@@ -108,7 +108,7 @@ public class LigneRepositoryTest {
     @Test
     public void testRecupererToutesLesGaresDuneLigne() {
         Optional<Ligne> ligneFromBdd = ligneRepository.findById(ligne.get_id());
-        List<ObjectId> garesLigneFromBdd = ligneFromBdd.get().getGare_ids();
+        List<String> garesLigneFromBdd = ligneFromBdd.get().getGare_ids();
         assertTrue(ligneFromBdd != null);
         assertTrue(garesLigneFromBdd.size() == 3);
     }
@@ -116,7 +116,7 @@ public class LigneRepositoryTest {
     @Test
     public void testRecupererToutesLesGaresDuneLigneByNomLigne() {
         Ligne ligneFromBdd = ligneRepository.getLigneByNom("PremiereLigne").get();
-        List<ObjectId> garesLigneFromBdd = ligneFromBdd.getGare_ids();
+        List<String> garesLigneFromBdd = ligneFromBdd.getGare_ids();
         assertTrue(ligneFromBdd != null);
         assertTrue(garesLigneFromBdd.size() == 2);
     }
@@ -124,14 +124,14 @@ public class LigneRepositoryTest {
     @Test
     public void testRecupererToutesLesGaresDuneLigneAvecOrdre() {
         Ligne ligneFromBdd = ligneRepository.getLigneByNom("Ligne").get();
-        List<ObjectId> garesFromBdd = new ArrayList<>(ligneFromBdd.getGare_ids());
+        List<String> garesFromBdd = new ArrayList<>(ligneFromBdd.getGare_ids());
 
         assertTrue(ligneFromBdd != null);
         assertTrue(garesFromBdd.size() == 3);
 
-        Gare gareBdd1 = gareRepository.findById(garesFromBdd.get(0)).get();
-        Gare gareBdd2 = gareRepository.findById(garesFromBdd.get(1)).get();
-        Gare gareBdd3 = gareRepository.findById(garesFromBdd.get(2)).get();
+        Gare gareBdd1 = gareRepository.getByIdGare(garesFromBdd.get(0)).get();
+        Gare gareBdd2 = gareRepository.getByIdGare(garesFromBdd.get(1)).get();
+        Gare gareBdd3 = gareRepository.getByIdGare(garesFromBdd.get(2)).get();
 
 		assertEquals("TroisiemeGare", gareBdd1.getNom());
 		assertEquals("PremiereGare", gareBdd2.getNom());

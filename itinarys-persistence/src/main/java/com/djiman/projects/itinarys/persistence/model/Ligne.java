@@ -25,7 +25,7 @@ public class Ligne {
 
 	private String couleur;
 
-	private List<ObjectId> gare_ids = new ArrayList<>();
+	private List<String> gare_ids = new ArrayList<>();
 
 	public Ligne() {
 	}
@@ -91,15 +91,15 @@ public class Ligne {
 		this.couleur = couleur;
 	}
 
-	public List<ObjectId> getGare_ids() {
+	public List<String> getGare_ids() {
 		return gare_ids;
 	}
 
-	public void setGare_ids(List<ObjectId> gare_ids) {
+	public void setGare_ids(List<String> gare_ids) {
 		this.gare_ids = gare_ids;
 	}
 
-	public void addGare(ObjectId gareLigne) {
+	public void addGare(String gareLigne) {
 		this.gare_ids.add(gareLigne);
 	}
 

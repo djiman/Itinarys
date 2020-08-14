@@ -66,13 +66,13 @@ public class LigneManagerImpl implements LigneManager {
         return ligne;
     }
 
-    private List<ObjectId> getGareIds(LigneDTO pLigneDto) {
-        List<ObjectId> garesIds = new ArrayList<>();
+    private List<String> getGareIds(LigneDTO pLigneDto) {
+        List<String> garesIds = new ArrayList<>();
         for (GareDTO gareDTO : pLigneDto.getGaresDto()) {
             Optional<Gare> gareOptional = gareRepository.getGareByNom(gareDTO.getGare());
             if (!gareOptional.isPresent())
                 throw new IllegalArgumentException("Gare inconnue" + gareDTO.getGare());
-            garesIds.add(gareOptional.get().get_id());
+            garesIds.add(gareOptional.get().getIdGare());
         }
         return garesIds;
     }
@@ -86,8 +86,8 @@ public class LigneManagerImpl implements LigneManager {
         result.setCouleur(pLigne.getCouleur());
         List<GareDTO> garesDto = new ArrayList<>();
         int index = 1;
-        for (ObjectId gareId : pLigne.getGare_ids()) {
-            Optional<Gare> gare = gareRepository.findById(gareId);
+        for (String gareId : pLigne.getGare_ids()) {
+            Optional<Gare> gare = gareRepository.getByIdGare(gareId);
             GareDTO gareDto = new GareDTO();
             gareDto.setOrdre(index++);
             gareDto.setGare(gare.get().getNom());
