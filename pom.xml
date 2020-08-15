@@ -27,10 +27,6 @@
 		</dependency>
 	</dependencies>
 
-	<properties>
-		<java.version>14</java.version>
-	</properties>
-
 	<repositories>
 		<repository>
 			<id>spring-releases</id>
