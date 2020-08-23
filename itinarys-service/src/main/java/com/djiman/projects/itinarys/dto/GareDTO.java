@@ -19,6 +19,8 @@ public class GareDTO implements Serializable {
 
 	private Character statut;
 
+	private int ordre;
+
 	public GareDTO() {
 		// Default constructor
 	}
@@ -73,6 +75,14 @@ public class GareDTO implements Serializable {
 
 	public Character getStatut() {
 		return statut;
+	}
+
+	public int getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
 	}
 
 	public void setStatut(Character statut) {

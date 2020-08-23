@@ -94,6 +94,7 @@ public class LigneManagerImpl implements LigneManager {
         for (String gareId : pLigne.getGare_ids()) {
             Optional<Gare> gare = gareRepository.getByIdGare(gareId);
             GareDTO gareDto = new GareDTO();
+            gareDto.setOrdre(index++);
             gareDto.setGare(gare.get().getNom());
             garesDto.add(gareDto);
         }
