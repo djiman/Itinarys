@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 /**
  * @author gorguindong Initial version 1.0.0
  */
@@ -23,6 +25,8 @@ public class Gare {
 	private String commentaire;
 
 	private String idGare;
+
+	private String type;
 
 	public Gare() {
 	}
@@ -70,4 +74,31 @@ public class Gare {
 	public String getIdGare() { return idGare; }
 
 	public void setIdGare(String idGare) { this.idGare = idGare; }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Gare gare = (Gare) o;
+		return Objects.equals(_id, gare._id) &&
+				Objects.equals(nom, gare.nom) &&
+				Objects.equals(statut, gare.statut) &&
+				Objects.equals(ville, gare.ville) &&
+				Objects.equals(commentaire, gare.commentaire) &&
+				Objects.equals(idGare, gare.idGare) &&
+				Objects.equals(type, gare.type);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_id, nom, statut, ville, commentaire, idGare, type);
+	}
 }

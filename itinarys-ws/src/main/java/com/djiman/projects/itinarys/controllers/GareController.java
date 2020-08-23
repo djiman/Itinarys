@@ -1,9 +1,8 @@
 package com.djiman.projects.itinarys.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.djiman.projects.itinarys.dto.GareDTO;
+import com.djiman.projects.itinarys.manager.GareManager;
+import org.springframework.web.bind.annotation.*;
 import com.djiman.projects.itinarys.persistence.model.Gare;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 
@@ -18,14 +17,24 @@ public class GareController {
 
     GareRepository gareRepository;
 
-    public GareController(GareRepository gareRepository) {
+    GareManager gareManager;
+
+    public GareController(GareRepository gareRepository, GareManager gareManager) {
         this.gareRepository = gareRepository;
+        this.gareManager = gareManager;
     }
 
-    @GetMapping("/gare")
-    public Iterable<Gare> getGare() {
+    @GetMapping("/gares")
+    public Iterable<Gare> getGares() {
         return gareRepository.findAll();
     }
-    // TODO createOrModifyGare
+
+    @PostMapping("/gare")
+    public @ResponseBody Gare createGare(@RequestBody  GareDTO pGareDto)
+    {
+        Gare gare = gareManager.convertGareDtoToGare(pGareDto);
+        gareRepository.save(gare);
+        return gare;
+    }
 
 }

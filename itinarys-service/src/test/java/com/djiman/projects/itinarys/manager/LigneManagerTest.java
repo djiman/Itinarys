@@ -46,20 +46,23 @@ public class LigneManagerTest {
 
     @Test
     public void testConvertLigneDtoToLigne() {
+
+        String nomGare = "nom gare";
+        String idGare = "id gare";
         LigneDTO ligneDto = new LigneDTO();
         ligneDto.setCommentaire("Test Ligne Dto");
         ligneDto.setNomLigne("Test Nom Ligne");
         ligneDto.setStatut('1');
         ligneDto.setType("Train");
         List<GareDTO> garesDto = new ArrayList<>();
-        GareDTO gareDto = new GareDTO("nom gare", 1, "");
+        GareDTO gareDto = new GareDTO(nomGare, "type", idGare, "commentaire", '1');
         garesDto.add(gareDto);
         ligneDto.setGaresDto(garesDto);
         Gare gareExpected = new Gare();
         ObjectId gareId = new ObjectId();
         gareExpected.set_id(gareId);
-        gareExpected.setNom("nom gare");
-        gareExpected.setIdGare("idGare");
+        gareExpected.setNom(nomGare);
+        gareExpected.setIdGare(idGare);
         Optional<Gare> opt = Optional.of(gareExpected);
         Mockito.when(gareRepository.getGareByNom("nom gare")).thenReturn(opt);
 

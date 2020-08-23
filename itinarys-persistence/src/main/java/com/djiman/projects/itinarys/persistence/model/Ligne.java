@@ -110,4 +110,24 @@ public class Ligne {
 	}
 
 	// TODO removeGare
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Ligne ligne = (Ligne) o;
+		return Objects.equals(_id, ligne._id) &&
+				Objects.equals(nom, ligne.nom) &&
+				Objects.equals(statut, ligne.statut) &&
+				Objects.equals(type, ligne.type) &&
+				Objects.equals(commentaire, ligne.commentaire) &&
+				Objects.equals(couleur, ligne.couleur) &&
+				Objects.equals(gare_ids, ligne.gare_ids);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_id, nom, statut, type, commentaire, couleur, gare_ids);
+	}
 }

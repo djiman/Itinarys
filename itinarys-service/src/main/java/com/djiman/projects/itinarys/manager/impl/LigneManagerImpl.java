@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.djiman.projects.itinarys.manager.GareManager;
 import com.djiman.projects.itinarys.manager.LigneManager;
 
 import com.djiman.projects.itinarys.dto.GareDTO;
@@ -12,7 +13,6 @@ import com.djiman.projects.itinarys.persistence.model.Gare;
 import com.djiman.projects.itinarys.persistence.model.Ligne;
 import com.djiman.projects.itinarys.persistence.GareRepository;
 import com.djiman.projects.itinarys.persistence.LigneRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,9 @@ public class LigneManagerImpl implements LigneManager {
 
     @Autowired
     GareRepository gareRepository;
+
+    @Autowired
+    GareManager gareManager;
 
     public Iterable<LigneDTO> getAllLignes() {
         List<Ligne> result = ligneRepository.findAll();
@@ -70,9 +73,11 @@ public class LigneManagerImpl implements LigneManager {
         List<String> garesIds = new ArrayList<>();
         for (GareDTO gareDTO : pLigneDto.getGaresDto()) {
             Optional<Gare> gareOptional = gareRepository.getGareByNom(gareDTO.getGare());
-            if (!gareOptional.isPresent())
-                throw new IllegalArgumentException("Gare inconnue" + gareDTO.getGare());
-            garesIds.add(gareOptional.get().getIdGare());
+            if (!gareOptional.isPresent()) {
+                //Save new gare
+                gareRepository.save(gareManager.convertGareDtoToGare(gareDTO));
+            }
+            garesIds.add(gareDTO.getIdGare());
         }
         return garesIds;
     }
@@ -89,7 +94,6 @@ public class LigneManagerImpl implements LigneManager {
         for (String gareId : pLigne.getGare_ids()) {
             Optional<Gare> gare = gareRepository.getByIdGare(gareId);
             GareDTO gareDto = new GareDTO();
-            gareDto.setOrdre(index++);
             gareDto.setGare(gare.get().getNom());
             garesDto.add(gareDto);
         }

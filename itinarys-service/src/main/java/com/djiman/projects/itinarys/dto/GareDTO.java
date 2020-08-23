@@ -11,18 +11,24 @@ public class GareDTO implements Serializable {
 
 	private String nomGare;
 
-	private int ordre;
-
 	private String type;
+
+	private String idGare;
+
+	private String commentaire;
+
+	private Character statut;
 
 	public GareDTO() {
 		// Default constructor
 	}
 
-	public GareDTO(String gare, int ordre, String type) {
+	public GareDTO(String gare, String type, String idGare, String commentaire, Character statut) {
 		this.nomGare = gare;
-		this.ordre = ordre;
 		this.type = type;
+		this.idGare = idGare;
+		this.commentaire = commentaire;
+		this.statut = statut;
 	}
 
 	public String getGare() {
@@ -33,12 +39,12 @@ public class GareDTO implements Serializable {
 		this.nomGare = gare;
 	}
 
-	public int getOrdre() {
-		return ordre;
+	public String getNomGare() {
+		return nomGare;
 	}
 
-	public void setOrdre(int ordre) {
-		this.ordre = ordre;
+	public void setNomGare(String nomGare) {
+		this.nomGare = nomGare;
 	}
 
 	public String getType() {
@@ -47,5 +53,29 @@ public class GareDTO implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getIdGare() {
+		return idGare;
+	}
+
+	public void setIdGare(String idGare) {
+		this.idGare = idGare;
+	}
+
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+
+	public Character getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Character statut) {
+		this.statut = statut;
 	}
 }
