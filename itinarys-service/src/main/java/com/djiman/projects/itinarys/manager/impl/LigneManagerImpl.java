@@ -63,6 +63,7 @@ public class LigneManagerImpl implements LigneManager {
         }
         ligne.setCommentaire(pLigneDto.getCommentaire());
         ligne.setNom(pLigneDto.getNomLigne());
+        ligne.setCouleur(pLigneDto.getCouleur());
         ligne.setStatut(pLigneDto.getStatut());
         ligne.setType(pLigneDto.getType());
         ligne.setGare_ids(getGareIds(pLigneDto));
