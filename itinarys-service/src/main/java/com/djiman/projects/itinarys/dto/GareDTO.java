@@ -1,6 +1,7 @@
 package com.djiman.projects.itinarys.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GareDTO implements Serializable {
 
@@ -20,6 +21,8 @@ public class GareDTO implements Serializable {
 	private Character statut;
 
 	private int ordre;
+
+	private String links;
 
 	public GareDTO() {
 		// Default constructor
@@ -88,4 +91,13 @@ public class GareDTO implements Serializable {
 	public void setStatut(Character statut) {
 		this.statut = statut;
 	}
+
+	public String getLinks() {
+		return links;
+	}
+
+	public void setLinks(String links) {
+		this.links = links;
+	}
+
 }

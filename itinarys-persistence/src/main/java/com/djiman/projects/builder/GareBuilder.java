@@ -3,6 +3,8 @@ package com.djiman.projects.builder;
 import com.djiman.projects.itinarys.persistence.model.Gare;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 /**
  * @author gorguindong Initial version 1.0.0
  */
@@ -14,6 +16,7 @@ public class GareBuilder {
 	private Character statut;
 	private String ville;
 	private String commentaire;
+	private List<String> links;
 
 	public GareBuilder _id(ObjectId _id) {
 		this._id = _id;
@@ -45,6 +48,11 @@ public class GareBuilder {
 		return this;
 	}
 
+	public  GareBuilder links(List<String> links){
+		this.links = links;
+		return this;
+	}
+
 	public Gare build() {
 		Gare gare = new Gare();
 		gare.set_id(this._id);
@@ -53,6 +61,7 @@ public class GareBuilder {
 		gare.setNom(this.nomGare);
 		gare.setStatut(this.statut);
 		gare.setVille(this.ville);
+		gare.setLinks(this.links);
 		return gare;
 	}
 }

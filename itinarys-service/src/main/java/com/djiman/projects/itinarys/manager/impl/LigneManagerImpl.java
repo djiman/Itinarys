@@ -3,6 +3,7 @@ package com.djiman.projects.itinarys.manager.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.djiman.projects.itinarys.manager.GareManager;
 import com.djiman.projects.itinarys.manager.LigneManager;
@@ -96,8 +97,16 @@ public class LigneManagerImpl implements LigneManager {
             Optional<Gare> gare = gareRepository.getByIdGare(gareId);
             GareDTO gareDto = new GareDTO();
             gareDto.setOrdre(index++);
-            gareDto.setGare(gare.get().getNom());
-            garesDto.add(gareDto);
+            if(gare.isPresent()) {
+                Gare gareFromBdd = gare.get();
+                gareDto.setGare(gareFromBdd.getNom());
+                gareDto.setType(gareFromBdd.getType());
+                gareDto.setIdGare(gareFromBdd.getIdGare());
+                gareDto.setCommentaire(gareFromBdd.getCommentaire());
+                gareDto.setStatut(gareFromBdd.getStatut());
+                gareDto.setLinks(gareFromBdd.getLinks().stream().collect(Collectors.joining(",")));
+                garesDto.add(gareDto);
+            }
         }
         Optional<GareDTO> firstGare = garesDto.stream().findFirst();
         if(firstGare.isPresent()) {
