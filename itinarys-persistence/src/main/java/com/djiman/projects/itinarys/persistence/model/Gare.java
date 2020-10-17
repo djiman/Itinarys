@@ -29,7 +29,7 @@ public class Gare {
 
 	private String type;
 
-	private List<String> links;
+	private String links;
 
 	public Gare() {
 	}
@@ -86,9 +86,9 @@ public class Gare {
 		this.type = type;
 	}
 
-	public List<String> getLinks() { return links; }
+	public String getLinks() { return links; }
 
-	public void setLinks(List<String> links) { this.links = links; }
+	public void setLinks(String links) { this.links = links; }
 
 	@Override
 	public boolean equals(Object o) {

@@ -20,7 +20,10 @@ public class GareManagerImpl implements GareManager {
         gare.setNom(pGareDto.getNomGare());
         gare.setCommentaire(pGareDto.getCommentaire());
         gare.setStatut(pGareDto.getStatut());
-        gare.setLinks(Arrays.asList(pGareDto.getLinks()));
+        //TODO A adapter
+        if(pGareDto.getLinks() != null) {
+            gare.setLinks(pGareDto.getLinks().get(0).getNomLigne());
+        }
         return gare;
     }
 }

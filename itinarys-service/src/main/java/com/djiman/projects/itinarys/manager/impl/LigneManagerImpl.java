@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.djiman.projects.itinarys.dto.LinkDTO;
 import com.djiman.projects.itinarys.manager.GareManager;
 import com.djiman.projects.itinarys.manager.LigneManager;
 
@@ -97,16 +98,7 @@ public class LigneManagerImpl implements LigneManager {
             Optional<Gare> gare = gareRepository.getByIdGare(gareId);
             GareDTO gareDto = new GareDTO();
             gareDto.setOrdre(index++);
-            if(gare.isPresent()) {
-                Gare gareFromBdd = gare.get();
-                gareDto.setGare(gareFromBdd.getNom());
-                gareDto.setType(gareFromBdd.getType());
-                gareDto.setIdGare(gareFromBdd.getIdGare());
-                gareDto.setCommentaire(gareFromBdd.getCommentaire());
-                gareDto.setStatut(gareFromBdd.getStatut());
-                gareDto.setLinks(gareFromBdd.getLinks().stream().collect(Collectors.joining(",")));
-                garesDto.add(gareDto);
-            }
+            fillGaresDTO(garesDto, gare, gareDto);
         }
         Optional<GareDTO> firstGare = garesDto.stream().findFirst();
         if(firstGare.isPresent()) {
@@ -118,6 +110,31 @@ public class LigneManagerImpl implements LigneManager {
         }
         result.setGaresDto(garesDto);
         return result;
+    }
+
+    private void fillGaresDTO(List<GareDTO> garesDto, Optional<Gare> gare, GareDTO gareDto) {
+        if(gare.isPresent()) {
+            Gare gareFromBdd = gare.get();
+            gareDto.setGare(gareFromBdd.getNom());
+            gareDto.setType(gareFromBdd.getType());
+            gareDto.setIdGare(gareFromBdd.getIdGare());
+            gareDto.setCommentaire(gareFromBdd.getCommentaire());
+            gareDto.setStatut(gareFromBdd.getStatut());
+            if(gareFromBdd.getLinks()!= null) {
+                List<LinkDTO> linksDTO = new ArrayList<>();
+                String[] nomLignesLink = gareFromBdd.getLinks().split(",");
+                for(String nomLigneLink : nomLignesLink) {
+                    LinkDTO linkDTO = new LinkDTO();
+                    linkDTO.setNomLigne(nomLigneLink);
+                    if (ligneRepository.getLigneByNom(nomLigneLink).isPresent()) {
+                        linkDTO.setCouleur(ligneRepository.getLigneByNom(nomLigneLink).get().getCouleur());
+                    }
+                    linksDTO.add(linkDTO);
+                }
+                gareDto.setLinks(linksDTO);
+            }
+            garesDto.add(gareDto);
+        }
     }
 
     @Override

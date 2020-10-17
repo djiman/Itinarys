@@ -16,7 +16,7 @@ public class GareBuilder {
 	private Character statut;
 	private String ville;
 	private String commentaire;
-	private List<String> links;
+	private String links;
 
 	public GareBuilder _id(ObjectId _id) {
 		this._id = _id;
@@ -48,7 +48,7 @@ public class GareBuilder {
 		return this;
 	}
 
-	public  GareBuilder links(List<String> links){
+	public  GareBuilder links(String links){
 		this.links = links;
 		return this;
 	}

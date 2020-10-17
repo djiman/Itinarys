@@ -22,7 +22,7 @@ public class GareDTO implements Serializable {
 
 	private int ordre;
 
-	private String links;
+	private List<LinkDTO> links;
 
 	public GareDTO() {
 		// Default constructor
@@ -92,11 +92,11 @@ public class GareDTO implements Serializable {
 		this.statut = statut;
 	}
 
-	public String getLinks() {
+	public List<LinkDTO> getLinks() {
 		return links;
 	}
 
-	public void setLinks(String links) {
+	public void setLinks(List<LinkDTO> links) {
 		this.links = links;
 	}
 
