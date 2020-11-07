@@ -22,7 +22,8 @@ public class GareDTO implements Serializable {
 
 	private int ordre;
 
-	private List<LinkDTO> links;
+	private List<LinkDTO> linksBus;
+	private List<LinkDTO> linksTrain;
 
 	public GareDTO() {
 		// Default constructor
@@ -92,12 +93,19 @@ public class GareDTO implements Serializable {
 		this.statut = statut;
 	}
 
-	public List<LinkDTO> getLinks() {
-		return links;
+	public List<LinkDTO> getLinksBus() {
+		return linksBus;
 	}
 
-	public void setLinks(List<LinkDTO> links) {
-		this.links = links;
+	public void setLinksBus(List<LinkDTO> linksBus) {
+		this.linksBus = linksBus;
 	}
 
+	public List<LinkDTO> getLinksTrain() {
+		return linksTrain;
+	}
+
+	public void setLinksTrain(List<LinkDTO> linksTrain) {
+		this.linksTrain = linksTrain;
+	}
 }

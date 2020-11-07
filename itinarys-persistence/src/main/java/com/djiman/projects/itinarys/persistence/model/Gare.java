@@ -4,7 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,7 +28,9 @@ public class Gare {
 
 	private String type;
 
-	private String links;
+	private String linksBus;
+
+	private String linksTrain;
 
 	public Gare() {
 	}
@@ -86,9 +87,17 @@ public class Gare {
 		this.type = type;
 	}
 
-	public String getLinks() { return links; }
+	public String getLinksBus() { return linksBus; }
 
-	public void setLinks(String links) { this.links = links; }
+	public void setLinksBus(String linksBus) { this.linksBus = linksBus; }
+
+	public String getLinksTrain() {
+		return linksTrain;
+	}
+
+	public void setLinksTrain(String linksTrain) {
+		this.linksTrain = linksTrain;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -102,11 +111,12 @@ public class Gare {
 				Objects.equals(commentaire, gare.commentaire) &&
 				Objects.equals(idGare, gare.idGare) &&
 				Objects.equals(type, gare.type) &&
-				Objects.equals(links,gare.links);
+				Objects.equals(linksBus,gare.linksBus) &&
+				Objects.equals(linksTrain,gare.linksTrain);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_id, nom, statut, ville, commentaire, idGare, type, links);
+		return Objects.hash(_id, nom, statut, ville, commentaire, idGare, type, linksBus);
 	}
 }

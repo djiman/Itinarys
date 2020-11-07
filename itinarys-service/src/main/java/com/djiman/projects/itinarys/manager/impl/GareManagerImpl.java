@@ -5,8 +5,6 @@ import com.djiman.projects.itinarys.manager.GareManager;
 import com.djiman.projects.itinarys.persistence.model.Gare;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-
 @Service
 public class GareManagerImpl implements GareManager {
 
@@ -21,8 +19,11 @@ public class GareManagerImpl implements GareManager {
         gare.setCommentaire(pGareDto.getCommentaire());
         gare.setStatut(pGareDto.getStatut());
         //TODO A adapter
-        if(pGareDto.getLinks() != null) {
-            gare.setLinks(pGareDto.getLinks().get(0).getNomLigne());
+        if(pGareDto.getLinksBus() != null) {
+            gare.setLinksBus(pGareDto.getLinksBus().get(0).getNomLigne());
+        }
+        if(pGareDto.getLinksTrain() != null) {
+            gare.setLinksTrain(pGareDto.getLinksTrain().get(0).getNomLigne());
         }
         return gare;
     }

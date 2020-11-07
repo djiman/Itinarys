@@ -3,7 +3,6 @@ package com.djiman.projects.itinarys.manager.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.djiman.projects.itinarys.dto.LinkDTO;
 import com.djiman.projects.itinarys.manager.GareManager;
@@ -120,10 +119,11 @@ public class LigneManagerImpl implements LigneManager {
             gareDto.setIdGare(gareFromBdd.getIdGare());
             gareDto.setCommentaire(gareFromBdd.getCommentaire());
             gareDto.setStatut(gareFromBdd.getStatut());
-            if(gareFromBdd.getLinks()!= null) {
+            //Correspondances de type Bus
+            if(gareFromBdd.getLinksBus()!= null) {
                 List<LinkDTO> linksDTO = new ArrayList<>();
-                String[] nomLignesLink = gareFromBdd.getLinks().split(",");
-                for(String nomLigneLink : nomLignesLink) {
+                String[] nomLignesLinkBus = gareFromBdd.getLinksBus().split(",");
+                for(String nomLigneLink : nomLignesLinkBus) {
                     LinkDTO linkDTO = new LinkDTO();
                     linkDTO.setNomLigne(nomLigneLink);
                     if (ligneRepository.getLigneByNom(nomLigneLink).isPresent()) {
@@ -131,7 +131,20 @@ public class LigneManagerImpl implements LigneManager {
                     }
                     linksDTO.add(linkDTO);
                 }
-                gareDto.setLinks(linksDTO);
+                gareDto.setLinksBus(linksDTO);
+            }
+            if(gareFromBdd.getLinksTrain()!= null) {
+                List<LinkDTO> linksDTOTer = new ArrayList<>();
+                String[] nomLignesLink = gareFromBdd.getLinksTrain().split(",");
+                for(String nomLigneLink : nomLignesLink) {
+                    LinkDTO linkDTO = new LinkDTO();
+                    linkDTO.setNomLigne(nomLigneLink);
+                    if (ligneRepository.getLigneByNom(nomLigneLink).isPresent()) {
+                        linkDTO.setCouleur(ligneRepository.getLigneByNom(nomLigneLink).get().getCouleur());
+                    }
+                    linksDTOTer.add(linkDTO);
+                }
+                gareDto.setLinksTrain(linksDTOTer);
             }
             garesDto.add(gareDto);
         }
