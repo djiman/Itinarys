@@ -24,6 +24,7 @@ public class GareDTO implements Serializable {
 
 	private List<LinkDTO> linksBus;
 	private List<LinkDTO> linksTrain;
+	private String idImage;
 
 	public GareDTO() {
 		// Default constructor
@@ -107,5 +108,13 @@ public class GareDTO implements Serializable {
 
 	public void setLinksTrain(List<LinkDTO> linksTrain) {
 		this.linksTrain = linksTrain;
+	}
+
+	public String getIdImage() {
+		return idImage;
+	}
+
+	public void setIdImage(String idImage) {
+		this.idImage = idImage;
 	}
 }

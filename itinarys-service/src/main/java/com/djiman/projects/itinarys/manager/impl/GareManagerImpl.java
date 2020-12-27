@@ -25,6 +25,7 @@ public class GareManagerImpl implements GareManager {
         if(pGareDto.getLinksTrain() != null) {
             gare.setLinksTrain(pGareDto.getLinksTrain().get(0).getNomLigne());
         }
+        gare.setIdImage(pGareDto.getIdImage());
         return gare;
     }
 }

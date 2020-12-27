@@ -32,6 +32,8 @@ public class Gare {
 
 	private String linksTrain;
 
+	private String idImage;
+
 	public Gare() {
 	}
 
@@ -99,6 +101,14 @@ public class Gare {
 		this.linksTrain = linksTrain;
 	}
 
+	public String getIdImage() {
+		return idImage;
+	}
+
+	public void setIdImage(String idImage) {
+		this.idImage = idImage;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -112,7 +122,8 @@ public class Gare {
 				Objects.equals(idGare, gare.idGare) &&
 				Objects.equals(type, gare.type) &&
 				Objects.equals(linksBus,gare.linksBus) &&
-				Objects.equals(linksTrain,gare.linksTrain);
+				Objects.equals(linksTrain,gare.linksTrain) &&
+				Objects.equals(idImage,gare.idImage);
 	}
 
 	@Override

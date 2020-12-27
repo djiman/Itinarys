@@ -119,6 +119,7 @@ public class LigneManagerImpl implements LigneManager {
             gareDto.setIdGare(gareFromBdd.getIdGare());
             gareDto.setCommentaire(gareFromBdd.getCommentaire());
             gareDto.setStatut(gareFromBdd.getStatut());
+            gareDto.setIdImage(gareFromBdd.getIdImage());
             //Correspondances de type Bus
             if(gareFromBdd.getLinksBus()!= null) {
                 List<LinkDTO> linksDTO = new ArrayList<>();
